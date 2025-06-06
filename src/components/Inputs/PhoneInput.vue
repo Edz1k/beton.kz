@@ -19,7 +19,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="mt-10 w-full relative">
+  <div class="w-full relative">
     <!-- Иконка -->
     <div
       class="i-mdi:phone text-xl text-gray-400 transition-colors duration-300 left-4 top-1/2 absolute peer-focus:text-accent -translate-y-1/2"
