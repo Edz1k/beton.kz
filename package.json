@@ -29,6 +29,7 @@
     "eslint-plugin-format": "catalog:dev",
     "jsdom": "catalog:build",
     "lint-staged": "catalog:dev",
+    "pnpm": "catalog:dev",
     "simple-git-hooks": "catalog:dev",
     "taze": "catalog:dev",
     "typescript": "catalog:dev",
