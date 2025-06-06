@@ -9,6 +9,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     NavigationComponent: typeof import('./src/components/NavigationComponent.vue')['default']
+    PhoneInput: typeof import('./src/components/Inputs/PhoneInput.vue')['default']
     RequestButtonModal: typeof import('./src/components/RequestButtonModal.vue')['default']
     RequestCallComponent: typeof import('./src/components/RequestCallComponent.vue')['default']
     RequestCallModalComponent: typeof import('./src/components/RequestCallModalComponent.vue')['default']
