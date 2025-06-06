@@ -14,12 +14,13 @@ declare module 'vue' {
     RequestCallComponent: typeof import('./src/components/RequestCallComponent.vue')['default']
     RequestCallModalComponent: typeof import('./src/components/RequestCallModalComponent.vue')['default']
     RequestForm: typeof import('./src/components/RequestForm.vue')['default']
-    RequestModal: typeof import('./src/components/RequestModal.vue')['default']
+    RequestModal: typeof import('./src/components/Requests/RequestModal.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Test: typeof import('./src/components/test.vue')['default']
     TheCounter: typeof import('./src/components/TheCounter.vue')['default']
     TheFooter: typeof import('./src/components/TheFooter.vue')['default']
     TheInput: typeof import('./src/components/TheInput.vue')['default']
+    UsernameInput: typeof import('./src/components/Inputs/UsernameInput.vue')['default']
   }
 }

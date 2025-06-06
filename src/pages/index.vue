@@ -2,9 +2,8 @@
 defineOptions({
   name: 'IndexPage',
 })
-const phone = ref('')
 </script>
 
 <template>
-  <PhoneInput v-model="phone" />
+  <div />
 </template>
