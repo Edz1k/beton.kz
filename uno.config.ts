@@ -11,6 +11,17 @@ export default defineConfig({
     ['btn', 'px-4 py-1 rounded inline-block bg-teal-600 text-white cursor-pointer hover:bg-teal-700 disabled:cursor-default disabled:bg-gray-600 disabled:opacity-50'],
     ['icon-btn', 'text-[0.9em] inline-block cursor-pointer select-none opacity-75 transition duration-200 ease-in-out hover:opacity-100 hover:text-teal-600'],
   ],
+  theme: {
+    colors: {
+      backGr: '#FFFFFF', // Главный фон — белый
+      textColor: '#2E2E2E', // Глубокий тёмно-серый текст
+      main: '#1A73E8', // Основной синий под логотип (пример: Google Blue)
+      accent: '#F5A623', // Жёлто-оранжевый (кнопки, акценты)
+      attention: '#D32F2F', // Красный для ошибок/уведомлений
+      concrete: '#BDBDBD', // Светло-серый для разделителей
+    },
+
+  },
   presets: [
     presetWind4(),
     presetAttributify(),

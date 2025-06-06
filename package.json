@@ -39,6 +39,7 @@
     "unplugin-vue-macros": "catalog:build",
     "unplugin-vue-router": "catalog:build",
     "vite": "catalog:build",
+    "vite-plugin-vue-devtools": "catalog:dev",
     "vitest": "catalog:dev",
     "vue-tsc": "catalog:dev"
   },

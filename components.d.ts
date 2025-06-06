@@ -8,6 +8,12 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    NavigationComponent: typeof import('./src/components/NavigationComponent.vue')['default']
+    RequestButtonModal: typeof import('./src/components/RequestButtonModal.vue')['default']
+    RequestCallComponent: typeof import('./src/components/RequestCallComponent.vue')['default']
+    RequestCallModalComponent: typeof import('./src/components/RequestCallModalComponent.vue')['default']
+    RequestForm: typeof import('./src/components/RequestForm.vue')['default']
+    RequestModal: typeof import('./src/components/RequestModal.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TheCounter: typeof import('./src/components/TheCounter.vue')['default']
