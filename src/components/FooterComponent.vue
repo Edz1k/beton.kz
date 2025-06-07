@@ -1,6 +1,6 @@
 <template>
   <footer class="text-gray-800 pb-6 pt-12 bg-white">
-    <div class="mx-auto px-4 gap-10 grid container md:grid-cols-3">
+    <div class="mx-auto px-4 gap-10 grid container md:grid-cols-4">
       <!-- Логотип и описание -->
       <div class="space-y-4">
         <img src="/logo.png" alt="MG Beton Logo" class="w-32">
@@ -16,10 +16,30 @@
         </h3>
         <ul class="text-sm space-y-2">
           <li><a href="#hero" class="hover:underline">Главная</a></li>
-          <li><a href="#products" class="hover:underline">Продукция</a></li>
-          <li><a href="#about" class="hover:underline">О компании</a></li>
+          <li><a href="#calc" class="hover:underline">Калькулятор объема</a></li>
+          <li><a href="#services" class="hover:underline">Услуги</a></li>
           <li><a href="#contacts" class="hover:underline">Контакты</a></li>
-          <li><a href="#pricing" class="hover:underline">Прайс-лист</a></li>
+        </ul>
+      </div>
+
+      <!-- Контакты -->
+      <div>
+        <h3 class="text-lg text-main font-semibold mb-4">
+          Контакты
+        </h3>
+        <ul class="text-sm space-y-2">
+          <li>
+            <span class="font-medium">Телефон:</span>
+            <a href="tel:+77751442023" class="block hover:underline">+7 (775) 144 2023</a>
+          </li>
+          <li>
+            <span class="font-medium">Email:</span>
+            <a href="mailto:info@mg-beton.kz" class="block hover:underline">megabeton@mail.ru</a>
+          </li>
+          <li>
+            <span class="font-medium">Адрес:</span>
+            <span class="block">г. Алматы, Улица Казыбаева, 262</span>
+          </li>
         </ul>
       </div>
 

@@ -5,8 +5,8 @@ defineOptions({ name: 'NavigationComponent' })
 
 const links = [
   { label: 'Главная', href: '#hero' },
+  { label: 'Калькулятор объема', href: '#calc' },
   { label: 'Услуги', href: '#services' },
-  { label: 'Бетонный насос', href: '#pricing' },
   { label: 'Контакты', href: '#contact' },
 ]
 
@@ -44,7 +44,7 @@ onMounted(() => {
                 <div class="i-mdi:phone text-main mr-2" />+7 775 144 20 23
               </li>
             </a>
-            <li>ramco.development@mail.ru</li>
+            <li>megabetonkz@mail.ru</li>
           </ul>
         </div>
 

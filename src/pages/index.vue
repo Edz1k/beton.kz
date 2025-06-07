@@ -5,7 +5,7 @@ defineOptions({
 </script>
 
 <template>
-  <section class="bg-[url('/background.png')] flex min-h-screen items-center relative bg-cover bg-center">
+  <section id="hero" class="bg-[url('/background.png')] flex min-h-screen items-center relative bg-cover bg-center">
     <!-- Затемнение -->
     <div class="bg-black/60 inset-0 absolute z-0" />
 
@@ -27,10 +27,10 @@ defineOptions({
     </div>
   </section>
 
-  <section>
+  <section id="calc" class="scroll-mt-16">
     <CalcTabs />
   </section>
-  <section class="px-4 py-16 bg-gray-50">
+  <section id="services" class="px-4 py-16 bg-gray-50 scroll-mt-16">
     <div class="mx-auto text-center container">
       <h2 class="text-2xl text-gray-900 font-bold mb-8 sm:text-4xl">
         Стоимость услуг бетонного насоса в Алматы
