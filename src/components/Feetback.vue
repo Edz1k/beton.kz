@@ -18,11 +18,12 @@ function handleSend() {
 </script>
 
 <template>
-  <div class="space-y-4">
-    <UsernameInput v-model="username" />
-    <PhoneInput v-model="phone" />
+  <div class="space-y-4" aria-label="Форма обратной связи MG Бетон">
+    <UsernameInput v-model="username" aria-label="Введите ваше имя" />
+    <PhoneInput v-model="phone" aria-label="Введите ваш номер телефона" />
     <button
       class="text-white px-6 py-3 rounded-lg bg-main shadow-md transition-all hover:opacity-90"
+      aria-label="Отправить заявку"
       @click="handleSend"
     >
       Оставить заявку

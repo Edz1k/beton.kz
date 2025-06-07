@@ -3,9 +3,9 @@
     <div class="mx-auto px-4 gap-10 grid container md:grid-cols-4">
       <!-- Логотип и описание -->
       <div class="space-y-4">
-        <img src="/logo.png" alt="MG Beton Logo" class="w-32">
+        <img src="/logo.png" alt="MG Beton Logo" class="w-32" loading="lazy">
         <p class="text-sm leading-relaxed">
-          ТОО «MG Бетон» — ваш надёжный поставщик бетона и строительных смесей по всему Казахстану. Мы предлагаем качественные материалы и индивидуальный подход к каждому проекту.
+          ТОО «MG Бетон» — ваш надёжный поставщик бетона и строительных смесей по всему Казахстану. Качество, надёжность и соблюдение сроков.
         </p>
       </div>
 
@@ -34,11 +34,13 @@
           </li>
           <li>
             <span class="font-medium">Email:</span>
-            <a href="mailto:info@mg-beton.kz" class="block hover:underline">megabeton@mail.ru</a>
+            <a href="mailto:megabeton@mail.ru" class="block hover:underline">megabeton@mail.ru</a>
           </li>
           <li>
             <span class="font-medium">Адрес:</span>
-            <span class="block">г. Алматы, Улица Казыбаева, 262</span>
+            <address class="block not-italic">
+              г. Алматы, ул. Казыбаева, 262
+            </address>
           </li>
         </ul>
       </div>
@@ -49,7 +51,7 @@
           Обратная связь
         </h3>
         <p class="text-sm mb-4">
-          Оставьте заявку, и мы свяжемся с вами в ближайшее время
+          Оставьте заявку, и мы свяжемся с вами в ближайшее время.
         </p>
         <Feetback />
       </div>
@@ -61,10 +63,10 @@
         &copy; 2024 MG Бетон | Все права защищены
       </p>
       <div class="text-xl text-gray-600 flex gap-4">
-        <a href="https://wa.me/77751442023" target="_blank" aria-label="WhatsApp">
+        <a href="https://wa.me/77751442023" target="_blank" rel="noopener" aria-label="WhatsApp">
           <div class="i-mdi:whatsapp transition duration-200 hover:text-green-500" />
         </a>
-        <a href="https://instagram.com" target="_blank" aria-label="Instagram">
+        <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
           <div class="i-mdi:instagram transition duration-200 hover:text-pink-500" />
         </a>
       </div>

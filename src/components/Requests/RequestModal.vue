@@ -9,6 +9,18 @@ const phone = ref('')
 function openModal() {
   isOpen.value = true
 }
+onMounted(() => {
+  window.addEventListener('keydown', onEsc)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', onEsc)
+})
+
+function onEsc(e: KeyboardEvent) {
+  if (e.key === 'Escape')
+    closeModal()
+}
 
 function closeModal() {
   isOpen.value = false
@@ -41,25 +53,33 @@ function handleSend() {
     leave-from-class="opacity-100 scale-100"
     leave-to-class="opacity-0 scale-95"
   >
+    <!-- Обёртка модалки -->
     <div
       v-if="isOpen"
       class="bg-black/40 flex items-center inset-0 justify-center fixed z-50 backdrop-blur-sm"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
     >
-      <div class="p-6 rounded-xl bg-white max-w-md w-full shadow-xl relative">
+      <div class="p-6 rounded-xl bg-white max-w-md w-full shadow-xl relative" role="document">
         <!-- Закрыть -->
-        <button class="text-2xl text-gray-400 transition right-3 top-3 absolute hover:text-red-500" @click="closeModal">
+        <button
+          class="text-2xl text-gray-400 transition right-3 top-3 absolute hover:text-red-500"
+          aria-label="Закрыть окно"
+          @click="closeModal"
+        >
           &times;
         </button>
 
         <!-- Заголовок -->
-        <h2 class="text-xl text-textColor font-semibold mb-4 text-center">
+        <h2 id="modal-title" class="text-xl text-textColor font-semibold mb-4 text-center">
           Оставьте заявку
         </h2>
 
         <!-- Поля -->
         <div class="space-y-4">
-          <UsernameInput v-model="name" />
-          <PhoneInput v-model="phone" />
+          <UsernameInput v-model="name" aria-label="Имя" />
+          <PhoneInput v-model="phone" aria-label="Телефон" />
         </div>
 
         <!-- Кнопка -->
