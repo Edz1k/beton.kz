@@ -24,4 +24,7 @@ defineOptions({
       </div>
     </div>
   </section>
+  <section>
+    <CalcTabs />
+  </section>
 </template>

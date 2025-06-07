@@ -8,7 +8,15 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    2: typeof import('./src/components/TabsVariants/Variant copy 2.vue')['default']
+    3: typeof import('./src/components/TabsVariants/Variant copy 3.vue')['default']
+    4: typeof import('./src/components/TabsVariants/Variant 4.vue')['default']
+    CalcTabs: typeof import('./src/components/CalcTabs.vue')['default']
+    copy: typeof import('./src/components/TabsVariants/Variant copy.vue')['default']
+    Floor: typeof import('./src/components/TabsVariants/Floor.vue')['default']
+    LoadingPlaceholder: typeof import('./src/components/LoadingPlaceholder.vue')['default']
     NavigationComponent: typeof import('./src/components/NavigationComponent.vue')['default']
+    PhoneComponent: typeof import('./src/components/PhoneComponent.vue')['default']
     PhoneInput: typeof import('./src/components/Inputs/PhoneInput.vue')['default']
     RequestButtonModal: typeof import('./src/components/RequestButtonModal.vue')['default']
     RequestCallComponent: typeof import('./src/components/RequestCallComponent.vue')['default']
@@ -22,5 +30,11 @@ declare module 'vue' {
     TheFooter: typeof import('./src/components/TheFooter.vue')['default']
     TheInput: typeof import('./src/components/TheInput.vue')['default']
     UsernameInput: typeof import('./src/components/Inputs/UsernameInput.vue')['default']
+    Variant: typeof import('./src/components/TabsVariants/Variant.vue')['default']
+    Variant1: typeof import('./src/components/TabsVariants/Variant1.vue')['default']
+    Variant2: typeof import('./src/components/TabsVariants/Variant2.vue')['default']
+    Variant3: typeof import('./src/components/TabsVariants/Variant3.vue')['default']
+    Variant4: typeof import('./src/components/TabsVariants/Variant4.vue')['default']
+    WhatsAppComponent: typeof import('./src/components/WhatsAppComponent.vue')['default']
   }
 }
