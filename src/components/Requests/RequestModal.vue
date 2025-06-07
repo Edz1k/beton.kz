@@ -1,4 +1,3 @@
-<!-- components/RequestModal.vue -->
 <script setup lang="ts">
 import { useTelegram } from '~/composables/useTelegramApi'
 
@@ -16,9 +15,8 @@ function closeModal() {
 }
 
 function handleSend() {
-  if (!name.value.trim() || !phone.value.trim()) {
+  if (!name.value.trim() || !phone.value.trim())
     return
-  }
 
   const message = `📝 Заявка\n👤 Имя: ${name.value}\n📞 Телефон: ${phone.value}`
   sendMessage(message)
@@ -34,32 +32,44 @@ function handleSend() {
     Оставить заявку
   </button>
 
-  <!-- Модалка -->
-  <div v-if="isOpen" class="bg-black/40 flex items-center inset-0 justify-center fixed z-50 backdrop-blur-sm">
-    <div class="p-6 rounded-xl bg-white max-w-md w-full shadow-xl relative">
-      <!-- Закрыть -->
-      <button class="text-2xl text-gray-400 transition-500 right-3 top-3 absolute hover:text-red-500" @click="closeModal">
-        &times;
-      </button>
+  <!-- Анимация модалки -->
+  <Transition
+    enter-active-class="transition ease-out duration-200"
+    enter-from-class="opacity-0 scale-95"
+    enter-to-class="opacity-100 scale-100"
+    leave-active-class="transition ease-in duration-150"
+    leave-from-class="opacity-100 scale-100"
+    leave-to-class="opacity-0 scale-95"
+  >
+    <div
+      v-if="isOpen"
+      class="bg-black/40 flex items-center inset-0 justify-center fixed z-50 backdrop-blur-sm"
+    >
+      <div class="p-6 rounded-xl bg-white max-w-md w-full shadow-xl relative">
+        <!-- Закрыть -->
+        <button class="text-2xl text-gray-400 transition right-3 top-3 absolute hover:text-red-500" @click="closeModal">
+          &times;
+        </button>
 
-      <!-- Заголовок -->
-      <h2 class="text-xl text-textColor font-semibold mb-4 text-center">
-        Оставьте заявку
-      </h2>
+        <!-- Заголовок -->
+        <h2 class="text-xl text-textColor font-semibold mb-4 text-center">
+          Оставьте заявку
+        </h2>
 
-      <!-- Поля -->
-      <div class="space-y-4">
-        <UsernameInput v-model="name" />
-        <PhoneInput v-model="phone" />
+        <!-- Поля -->
+        <div class="space-y-4">
+          <UsernameInput v-model="name" />
+          <PhoneInput v-model="phone" />
+        </div>
+
+        <!-- Кнопка -->
+        <button
+          class="text-white font-semibold mt-6 py-3 rounded-lg bg-main w-full transition-all hover:opacity-90"
+          @click="handleSend"
+        >
+          Отправить
+        </button>
       </div>
-
-      <!-- Кнопка -->
-      <button
-        class="text-white font-semibold mt-6 py-3 rounded-lg bg-main w-full transition-all hover:opacity-90"
-        @click="handleSend"
-      >
-        Отправить
-      </button>
     </div>
-  </div>
+  </Transition>
 </template>
