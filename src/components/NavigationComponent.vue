@@ -6,7 +6,7 @@ defineOptions({ name: 'NavigationComponent' })
 const links = [
   { label: 'Главная', href: '#hero' },
   { label: 'Услуги', href: '#services' },
-  { label: 'Прайс', href: '#pricing' },
+  { label: 'Бетонный насос', href: '#pricing' },
   { label: 'Контакты', href: '#contact' },
 ]
 

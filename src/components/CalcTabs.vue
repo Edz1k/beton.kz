@@ -56,6 +56,7 @@ const components: Record<TabKey, Component> = {
         <keep-alive>
           <component :is="components[activeTab]" />
         </keep-alive>
+        <RequestModal />
       </div>
     </div>
   </div>

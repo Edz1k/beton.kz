@@ -4,5 +4,6 @@
     <RouterView />
     <PhoneComponent />
     <WhatsAppComponent />
+    <FooterComponent />
   </main>
 </template>
