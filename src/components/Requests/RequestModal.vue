@@ -30,7 +30,7 @@ function handleSend() {
 
 <template>
   <!-- Кнопка открытия -->
-  <button class="text-white px-6 py-3 rounded-lg bg-accent shadow-md transition-all hover:opacity-90" @click="openModal">
+  <button class="text-white px-6 py-3 rounded-lg bg-main shadow-md transition-all hover:opacity-90" @click="openModal">
     Оставить заявку
   </button>
 
@@ -38,7 +38,7 @@ function handleSend() {
   <div v-if="isOpen" class="bg-black/40 flex items-center inset-0 justify-center fixed z-50 backdrop-blur-sm">
     <div class="p-6 rounded-xl bg-white max-w-md w-full shadow-xl relative">
       <!-- Закрыть -->
-      <button class="text-2xl text-gray-400 right-3 top-3 absolute hover:text-red-500" @click="closeModal">
+      <button class="text-2xl text-gray-400 transition-500 right-3 top-3 absolute hover:text-red-500" @click="closeModal">
         &times;
       </button>
 
@@ -55,7 +55,7 @@ function handleSend() {
 
       <!-- Кнопка -->
       <button
-        class="text-white font-semibold mt-6 py-3 rounded-lg bg-accent w-full transition-all hover:opacity-90"
+        class="text-white font-semibold mt-6 py-3 rounded-lg bg-main w-full transition-all hover:opacity-90"
         @click="handleSend"
       >
         Отправить

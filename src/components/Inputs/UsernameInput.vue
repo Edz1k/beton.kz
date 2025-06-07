@@ -14,7 +14,7 @@ const name = defineModel<string>()
       v-model="name"
       type="text"
       placeholder="Ваше имя"
-      class="peer text-lg text-textColor py-3 pl-12 pr-4 border border-concrete rounded-lg w-full transition-all duration-300 focus:outline-none hover:border-accent focus:ring-2 focus:ring-accent hover:shadow-md"
+      class="peer text-lg text-textColor py-3 pl-12 pr-4 border border-concrete rounded-lg w-full transition-all duration-300 focus:outline-none hover:border-main focus:ring-2 focus:ring-main hover:shadow-md"
     >
   </div>
 </template>

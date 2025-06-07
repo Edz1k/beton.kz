@@ -1,6 +1,6 @@
 <template>
   <main font-sans>
+    <NavigationComponent />
     <RouterView />
-    <RequestModal />
   </main>
 </template>
