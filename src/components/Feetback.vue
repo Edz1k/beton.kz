@@ -10,6 +10,16 @@ function handleSend() {
   if (!username.value.trim() || !phone.value.trim())
     return
 
+  // Отправка события в Google Analytics
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', 'form_submit', {
+      event_category: 'lead',
+      event_label: 'Форма в футере',
+      value: 1,
+    })
+  }
+
+  // Отправка в Telegram
   const message = `📝 Заявка\n👤 Имя: ${username.value}\n📞 Телефон: ${phone.value}`
   sendMessage(message)
   username.value = ''

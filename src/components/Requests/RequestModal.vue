@@ -1,6 +1,22 @@
 <script setup lang="ts">
 import { useTelegram } from '~/composables/useTelegramApi'
 
+declare global {
+  interface Window {
+    gtag: (...args: any[]) => void
+  }
+}
+
+function trackLeadEvent() {
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', 'submit_form', {
+      event_category: 'lead',
+      event_label: 'Форма заявки',
+      value: 1,
+    })
+  }
+}
+
 const { sendMessage } = useTelegram()
 const isOpen = ref(false)
 const name = ref('')
@@ -32,6 +48,10 @@ function handleSend() {
 
   const message = `📝 Заявка\n👤 Имя: ${name.value}\n📞 Телефон: ${phone.value}`
   sendMessage(message)
+
+  // GA4 событие
+  trackLeadEvent()
+
   name.value = ''
   phone.value = ''
   closeModal()
