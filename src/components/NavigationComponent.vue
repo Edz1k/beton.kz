@@ -103,7 +103,7 @@ onMounted(() => {
             <div class="i-mdi:phone text-main mr-2" />+7 775 144 20 23
           </a>
           <div class="mt-1">
-            ramco.development@mail.ru
+            megabeton@mail.ru
           </div>
         </div>
       </nav>

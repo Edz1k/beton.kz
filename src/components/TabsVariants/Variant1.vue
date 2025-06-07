@@ -17,8 +17,8 @@ const volume = computed(() => {
 
 <template>
   <div class="mx-auto px-4 py-10 max-w-7xl">
-    <div class="flex flex-col gap-8 items-center md:flex-row">
-      <!-- Левая колонка -->
+    <div class="flex flex-col-reverse gap-8 items-center md:flex-row">
+      <!-- Левая колонка (теперь будет снизу на мобилках) -->
       <div class="w-full space-y-5 md:w-1/2">
         <h2 class="text-xl text-gray-800 font-semibold">
           Введите размеры ленты
@@ -50,7 +50,7 @@ const volume = computed(() => {
         </p>
       </div>
 
-      <!-- Правая колонка: Картинка -->
+      <!-- Правая колонка: Картинка (сверху на мобилке) -->
       <div class="rounded-xl bg-gray-50 flex w-full items-center justify-center md:w-1/2">
         <img
           src="https://optim.tildacdn.pro/tild6133-6436-4432-a330-303439313930/-/resize/720x/-/format/webp/1.jpg.webp"

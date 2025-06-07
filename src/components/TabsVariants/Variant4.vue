@@ -21,7 +21,7 @@ const volume = computed(() => {
 
 <template>
   <div class="mx-auto px-4 py-10 max-w-7xl">
-    <div class="flex flex-col gap-8 items-center md:flex-row">
+    <div class="flex flex-col-reverse gap-8 items-center md:flex-row">
       <!-- Левая колонка -->
       <div class="w-full space-y-5 md:w-1/2">
         <h2 class="text-xl text-gray-800 font-semibold">
