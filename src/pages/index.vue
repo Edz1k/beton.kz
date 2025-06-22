@@ -2,6 +2,52 @@
 defineOptions({
   name: 'IndexPage',
 })
+
+const grades = [
+  {
+    grade: 'M150',
+    description: 'B12.5',
+    price: '15 000',
+    f: '100',
+    image: '/beton/150.webp',
+  },
+  {
+    grade: 'M200',
+    description: 'B15',
+    price: '15 500',
+    f: '150',
+    image: '/beton/200.webp',
+  },
+  {
+    grade: 'M250',
+    description: 'B20',
+    price: '16 000',
+
+    f: '200',
+    image: '/beton/250.webp',
+  },
+  {
+    grade: 'M300',
+    description: 'B22.5',
+    price: '16 500',
+    f: '200',
+    image: '/beton/300.webp',
+  },
+  {
+    grade: 'M350',
+    description: 'B25',
+    price: '17 000',
+    f: '300',
+    image: '/beton/350.webp',
+  },
+  {
+    grade: 'M400',
+    description: 'B30',
+    price: '18 000',
+    f: '300',
+    image: '/beton/400.webp',
+  },
+]
 </script>
 
 <template>
@@ -16,7 +62,7 @@ defineOptions({
       <div class="text-white py-12 flex flex-col min-h-[70vh] items-start justify-center md:items-start">
         <div class="text-center w-full space-y-6 md:text-left md:w-1/2">
           <h1 class="text-4xl leading-tight font-bold md:text-6xl sm:text-5xl">
-            Производство бетона в Казахстане от 15 000 тг/м³
+            Бетон и керамзит с доставкой по Алматы от 15 000 ₸
           </h1>
           <p class="text-base sm:text-lg">
             Компания «MG Бетон» предлагает доставку и производство бетона, керамзита и растворов с гарантией качества по всей стране.
@@ -29,13 +75,36 @@ defineOptions({
     </div>
   </section>
 
-  <!-- Калькулятор -->
   <section id="calc" class="scroll-mt-16">
     <CalcTabs />
   </section>
 
+  <section class="py-16 bg-gray-50">
+    <div class="mx-auto px-4 container">
+      <h2 class="text-3xl font-bold mb-10 text-center">
+        Цены на бетон с доставкой в Алматы
+      </h2>
+      <p class="text-sm text-gray-500 mb-6 text-center">
+        Все марки соответствуют ГОСТ. Цена указана без доставки. Позвоните — рассчитаем с доставкой.
+      </p>
+      <div class="gap-8 grid md:grid-cols-2 xl:grid-cols-3">
+        <ConcreteGradeCard
+          v-for="(grade, i) in grades"
+          :key="i"
+          v-bind="grade"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA блок -->
+  <section class="scroll-mt-16">
+    <CTAComponent />
+  </section>
+
+  <FAQComponent />
   <!-- Таблица услуг -->
-  <section id="services" class="px-4 py-16 bg-gray-50 scroll-mt-16">
+  <!-- <section id="services" class="px-4 py-16 bg-gray-50 scroll-mt-16">
     <div class="mx-auto text-center container">
       <h2 class="text-2xl text-gray-900 font-bold mb-8 sm:text-4xl">
         Услуги аренды бетонного насоса в Алматы
@@ -93,33 +162,5 @@ defineOptions({
         <RequestModal />
       </div>
     </div>
-  </section>
-
-  <!-- CTA блок -->
-  <section
-    class="flex min-h-[80vh] items-center justify-center relative bg-cover bg-center bg-no-repeat"
-    style="background-image: url('/ready.png');"
-  >
-    <div class="bg-black/60 inset-0 absolute z-0" aria-hidden="true" />
-
-    <div class="text-white px-4 text-center max-w-3xl relative z-10 animate-fade-in">
-      <h2 class="text-3xl font-bold mb-4 sm:text-5xl">
-        Готовы начать сотрудничество?
-      </h2>
-      <p class="text-base leading-relaxed mb-8 sm:text-lg">
-        Свяжитесь с нами прямо сейчас, чтобы обсудить объёмы, сроки и цены. Мы готовы предложить индивидуальный подход к каждому клиенту и гарантировать качество на всех этапах.
-      </p>
-
-      <div class="flex flex-col gap-4 items-center justify-center sm:flex-row">
-        <a
-          href="tel:+77751442023"
-          class="text-white font-medium px-6 py-3 rounded-lg bg-yellow-500 inline-flex gap-2 shadow transition-all duration-300 items-center hover:bg-yellow-600"
-        >
-          Позвонить
-        </a>
-
-        <RequestModal />
-      </div>
-    </div>
-  </section>
+  </section> -->
 </template>
