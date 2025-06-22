@@ -15,6 +15,7 @@
   "dependencies": {
     "@vueuse/core": "catalog:frontend",
     "@vueuse/head": "catalog:frontend",
+    "@vueuse/schema-org": "catalog:frontend",
     "inputmask": "catalog:frontend",
     "vite-ssg": "catalog:frontend",
     "vue": "catalog:frontend",

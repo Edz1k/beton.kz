@@ -1,6 +1,46 @@
-<script setup lang="ts" generic="T extends any, O extends any">
+<script setup lang="ts">
+import { useHead } from '@unhead/vue'
+import { defineLocalBusiness, useSchemaOrg } from '@vueuse/schema-org'
+
 defineOptions({
   name: 'IndexPage',
+})
+useSchemaOrg([
+  defineLocalBusiness({
+    name: 'MG Бетон',
+    telephone: '+7 775 144 20 23',
+    email: 'megabeton@mail.ru',
+    url: 'https://mg-beton.kz',
+    image: 'https://mg-beton.kz/logo.png',
+    description: 'Производство и доставка бетона и керамзита по Алматы и Казахстану.',
+    address: {
+      streetAddress: 'Улица Казыбаева, 262',
+      addressLocality: 'Алматы',
+      postalCode: '050014',
+      addressCountry: 'KZ',
+    },
+    openingHours: ['Mo-Sa 08:00-20:00'],
+  }),
+])
+
+useHead({
+  title: 'Бетон с доставкой по Алматы — MG Бетон',
+  meta: [
+    {
+      name: 'description',
+      content:
+        'Бетон от производителя в Алматы. М250, М300, М350. Доставка за 2 часа. Гарантия прочности, ГОСТ. Заказать бетон от 15 000 ₸/м³.',
+    },
+    { name: 'robots', content: 'index, follow' },
+    { property: 'og:title', content: 'MG Бетон — доставка по Алматы' },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:site_name', content: 'MG Бетон' },
+    { property: 'og:locale', content: 'ru_RU' },
+    { property: 'og:description', content: 'Производство и доставка бетона в Алматы. М250–М350 по ГОСТ.' },
+    { property: 'og:image', content: 'https://mg-beton.kz/logo.png' },
+    { property: 'og:url', content: 'https://mg-beton.kz/' },
+  ],
+  link: [{ rel: 'canonical', href: 'https://mg-beton.kz/' }],
 })
 
 const grades = [

@@ -86,9 +86,15 @@ catalogs:
     '@vueuse/core':
       specifier: ^13.3.0
       version: 13.3.0
+    '@vueuse/head':
+      specifier: ^2.0.0
+      version: 2.0.0
     inputmask:
       specifier: ^5.0.9
       version: 5.0.9
+    vite-ssg:
+      specifier: ^27.0.1
+      version: 27.0.1
     vue:
       specifier: ^3.5.16
       version: 3.5.16
@@ -108,13 +114,16 @@ importers:
         specifier: catalog:frontend
         version: 13.3.0(vue@3.5.16(typescript@5.8.3))
       '@vueuse/head':
-        specifier: ^2.0.0
+        specifier: catalog:frontend
         version: 2.0.0(vue@3.5.16(typescript@5.8.3))
+      '@vueuse/schema-org':
+        specifier: ^2.2.0
+        version: 2.2.0(@unhead/vue@2.0.10(vue@3.5.16(typescript@5.8.3)))(@vueuse/head@2.0.0(vue@3.5.16(typescript@5.8.3)))(vue@3.5.16(typescript@5.8.3))
       inputmask:
         specifier: catalog:frontend
         version: 5.0.9
       vite-ssg:
-        specifier: ^27.0.1
+        specifier: catalog:frontend
         version: 27.0.1(prettier@3.5.3)(unhead@2.0.10)(vite@6.3.5(@types/node@22.15.30)(jiti@2.4.2)(terser@5.43.1)(yaml@2.8.0))(vue-router@4.5.1(vue@3.5.16(typescript@5.8.3)))(vue@3.5.16(typescript@5.8.3))
       vue:
         specifier: catalog:frontend
@@ -1054,6 +1063,12 @@ packages:
     peerDependencies:
       unhead: 2.0.10
 
+  '@unhead/schema-org-vue@0.6.0':
+    resolution: {integrity: sha512-2zTVczJ8iI8jDOzaz2md8fr8j+jWqkmMdo89OI/VVPYWpA6Cy2BFCMvDqrptBZ2h3ieOZ/lhA/y+cTobBZEvaQ==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      '@unhead/vue': '>=1.1.9'
+
   '@unhead/schema@1.11.20':
     resolution: {integrity: sha512-0zWykKAaJdm+/Y7yi/Yds20PrUK7XabLe9c3IRcjnwYmSWY6z0Cr19VIs3ozCj8P+GhR+/TI2mwtGlueCEYouA==}
 
@@ -1595,6 +1610,13 @@ packages:
 
   '@vueuse/metadata@13.3.0':
     resolution: {integrity: sha512-42IzJIOYCKIb0Yjv1JfaKpx8JlCiTmtCWrPxt7Ja6Wzoq0h79+YVXmBV03N966KEmDEESTbp5R/qO3AB5BDnGw==}
+
+  '@vueuse/schema-org@2.2.0':
+    resolution: {integrity: sha512-9x3ZPiRoX4Q2U42jzqOdHTkrJRd0m3p7cVg/4pByqwOub/dWSq53OdNEqZjaa12w0/R0FIGTWkKV1uwonhqPnA==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      '@vueuse/head': '>=1.0.21'
+      vue: '>=3.2.0'
 
   '@vueuse/shared@13.3.0':
     resolution: {integrity: sha512-L1QKsF0Eg9tiZSFXTgodYnu0Rsa2P0En2LuLrIs/jgrkyiDuJSsPZK+tx+wU0mMsYHUYEjNsuE41uqqkuR8VhA==}
@@ -4542,6 +4564,10 @@ snapshots:
     dependencies:
       unhead: 2.0.10
 
+  '@unhead/schema-org-vue@0.6.0(@unhead/vue@2.0.10(vue@3.5.16(typescript@5.8.3)))':
+    dependencies:
+      '@unhead/vue': 2.0.10(vue@3.5.16(typescript@5.8.3))
+
   '@unhead/schema@1.11.20':
     dependencies:
       hookable: 5.5.3
@@ -5307,6 +5333,14 @@ snapshots:
       vue: 3.5.16(typescript@5.8.3)
 
   '@vueuse/metadata@13.3.0': {}
+
+  '@vueuse/schema-org@2.2.0(@unhead/vue@2.0.10(vue@3.5.16(typescript@5.8.3)))(@vueuse/head@2.0.0(vue@3.5.16(typescript@5.8.3)))(vue@3.5.16(typescript@5.8.3))':
+    dependencies:
+      '@unhead/schema-org-vue': 0.6.0(@unhead/vue@2.0.10(vue@3.5.16(typescript@5.8.3)))
+      '@vueuse/head': 2.0.0(vue@3.5.16(typescript@5.8.3))
+      vue: 3.5.16(typescript@5.8.3)
+    transitivePeerDependencies:
+      - '@unhead/vue'
 
   '@vueuse/shared@13.3.0(vue@3.5.16(typescript@5.8.3))':
     dependencies:

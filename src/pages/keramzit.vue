@@ -1,3 +1,24 @@
+<script setup lang="ts">
+import { useHead } from '@unhead/vue'
+
+useHead({
+  title: 'Керамзит с доставкой в Алматы — MG Бетон',
+  meta: [
+    {
+      name: 'description',
+      content:
+        'Керамзит фракций 5–10 и 10–20 мм. Доставка по Алматы. В мешках и россыпью. Утепление, отсыпка, строительство. Актуальные цены.',
+    },
+    { name: 'robots', content: 'index, follow' },
+    { property: 'og:title', content: 'Керамзит Алматы — доставка за 2 часа' },
+    { property: 'og:description', content: 'Керамзит в мешках и россыпью. Быстрая доставка по городу.' },
+    { property: 'og:image', content: 'https://mg-beton.kz/og-keramzit.png' },
+    { property: 'og:url', content: 'https://mg-beton.kz/keramzit' },
+  ],
+  link: [{ rel: 'canonical', href: 'https://mg-beton.kz/keramzit' }],
+})
+</script>
+
 <template>
   <section
     id="hero"
