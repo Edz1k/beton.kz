@@ -27,6 +27,7 @@
     "@iconify-json/carbon": "catalog:build",
     "@iconify-json/mdi": "catalog:build",
     "@types/node": "catalog:dev",
+    "@unhead/schema-org": "catalog:frontend",
     "@unocss/eslint-plugin": "catalog:dev",
     "@unocss/preset-icons": "catalog:build",
     "@vitejs/plugin-vue": "catalog:build",

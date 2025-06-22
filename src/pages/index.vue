@@ -1,31 +1,43 @@
 <script setup lang="ts">
 import { useSeoMeta } from '@unhead/vue'
+import { defineLocalBusiness, defineWebPage } from '@vueuse/schema-org'
 
 defineOptions({
   name: 'IndexPage',
 })
 
+defineWebPage({
+  name: 'Главная | MG Бетон',
+  description: 'Продажа и доставка бетона и керамзита в Алматы. Прямые поставки от производителя.',
+})
+
+defineLocalBusiness({
+  name: 'MG Бетон',
+  image: 'https://mg-beton.kz/logo.png',
+  address: {
+    streetAddress: 'ул. Примерная, 12',
+    addressLocality: 'Алматы',
+    addressCountry: 'KZ',
+  },
+  telephone: '+7 777 123 4567',
+  openingHours: 'Mo-Sa 08:00-20:00',
+  priceRange: '₸₸',
+})
+
 useSeoMeta({
-  // Basic SEO
-  title: 'Product Name - Your Brand',
-  description: 'Detailed product description optimized for search engines.',
+  title: 'Бетон и керамзит с доставкой — MG Бетон',
+  description: 'Бетон от 15 000 ₸. Керамзит. Доставка по Алматы за 2 часа.',
 
   // Open Graph
-  ogTitle: 'Product Name - Your Brand',
-  ogDescription: 'Engaging description for social media shares.',
-  ogImage: 'https://example.com/product-social.jpg',
-  ogUrl: 'https://example.com/products/my-product',
-  ogSiteName: 'Your Brand',
+  ogTitle: 'Бетон и керамзит — MG Бетон',
+  ogDescription: 'Быстрая доставка бетона и керамзита в Алматы.',
+  ogUrl: 'https://mg-beton.kz',
+  ogSiteName: 'MG Бетон',
 
-  // Twitter
-  twitterTitle: 'Product Name - Your Brand',
-  twitterDescription: 'Engaging description for Twitter shares.',
-  twitterImage: 'https://example.com/product-twitter.jpg',
-  twitterCard: 'summary_large_image',
-
-  // Product specific (structured data will be generated)
-  articlePublishedTime: '2023-01-01',
-  articleModifiedTime: '2023-02-15',
+  // Twitter (без картинки)
+  twitterCard: 'summary',
+  twitterTitle: 'Бетон и керамзит — MG Бетон',
+  twitterDescription: 'Цены от 15 000 ₸. Доставка бетона и керамзита в Алматы.',
 })
 
 const grades = [
