@@ -1,44 +1,48 @@
 <script setup lang="ts">
 import { useSeoMeta } from '@unhead/vue'
-import { defineLocalBusiness, defineWebPage } from '@vueuse/schema-org'
+import { defineLocalBusiness, defineProduct, defineQuestion, defineWebPage, defineWebSite, useSchemaOrg } from '@vueuse/schema-org'
 
 defineOptions({
   name: 'IndexPage',
 })
 
-defineWebPage({
-  name: 'Главная | MG Бетон',
-  description: 'Продажа и доставка бетона и керамзита в Алматы. Прямые поставки от производителя.',
-})
-
-defineLocalBusiness({
-  name: 'MG Бетон',
-  image: 'https://mg-beton.kz/logo.png',
-  address: {
-    streetAddress: 'ул. Примерная, 12',
-    addressLocality: 'Алматы',
-    addressCountry: 'KZ',
-  },
-  telephone: '+7 777 123 4567',
-  openingHours: 'Mo-Sa 08:00-20:00',
-  priceRange: '₸₸',
-})
-
 useSeoMeta({
   title: 'Бетон и керамзит с доставкой — MG Бетон',
   description: 'Бетон от 15 000 ₸. Керамзит. Доставка по Алматы за 2 часа.',
-
-  // Open Graph
   ogTitle: 'Бетон и керамзит — MG Бетон',
   ogDescription: 'Быстрая доставка бетона и керамзита в Алматы.',
   ogUrl: 'https://mg-beton.kz',
   ogSiteName: 'MG Бетон',
-
-  // Twitter (без картинки)
   twitterCard: 'summary',
   twitterTitle: 'Бетон и керамзит — MG Бетон',
   twitterDescription: 'Цены от 15 000 ₸. Доставка бетона и керамзита в Алматы.',
 })
+
+useSchemaOrg([
+  defineWebPage({
+    name: 'Главная | MG Бетон',
+    description: 'Продажа и доставка бетона и керамзита в Алматы. Прямые поставки от производителя.',
+  }),
+  defineWebSite({
+    name: 'MG Бетон',
+    url: 'https://mg-beton.kz',
+    description: 'Производство и доставка бетона, раствора, керамзита и сопутствующих материалов по Казахстану.',
+  }),
+  defineLocalBusiness({
+    name: 'MG Бетон',
+    url: 'https://mg-beton.kz',
+    image: 'https://mg-beton.kz/logo.png',
+    telephone: '+77751442023',
+    email: 'megabeton@mail.ru',
+    description: 'Производство и доставка бетона по всему Казахстану. Бетон от 15 000 тг/м³. Услуги автобетононасоса, раствор, керамзит и другое.',
+    address: {
+      streetAddress: 'Улица Казыбаева, 262',
+      addressLocality: 'Алматы',
+      addressCountry: 'KZ',
+    },
+    openingHours: ['Mo-Sa 08:00-20:00'],
+  }),
+])
 
 const grades = [
   {
@@ -85,6 +89,56 @@ const grades = [
     image: '/beton/400.webp',
   },
 ]
+
+grades.forEach((grade) => {
+  defineProduct({
+    name: `Бетон марки ${grade.grade}`,
+    description: `Бетон ${grade.grade} (${grade.description}) с морозостойкостью F${grade.f}`,
+    offers: {
+      price: grade.price,
+      priceCurrency: 'KZT',
+      availability: 'https://schema.org/InStock',
+    },
+    image: `https://mg-beton.kz${grade.image}`,
+  })
+})
+
+defineQuestion({
+  mainEntity: [
+    {
+      '@type': 'Question',
+      'name': 'Какая марка бетона подходит для фундамента?',
+      'acceptedAnswer': {
+        '@type': 'Answer',
+        'text': 'Для заливки фундамента частного дома чаще всего используют бетон М300 или бетон М350. Эти марки обеспечивают необходимую прочность, устойчивость к влаге и морозу.',
+      },
+    },
+    {
+      '@type': 'Question',
+      'name': 'В чём разница между бетоном М250 и М350?',
+      'acceptedAnswer': {
+        '@type': 'Answer',
+        'text': 'Бетон М250 — это более бюджетный вариант, используется для стяжек и полов. Бетон М350 — более прочный, применяется в строительстве колонн, плит перекрытия и монолитных конструкций.',
+      },
+    },
+    {
+      '@type': 'Question',
+      'name': 'Как выбрать нужную марку бетона?',
+      'acceptedAnswer': {
+        '@type': 'Answer',
+        'text': 'Выбор зависит от типа конструкции: для дорожек подойдёт М200–М250, для ленточного фундамента — бетон М300, для нагруженных конструкций — М350 и выше. Наши специалисты бесплатно помогут определиться.',
+      },
+    },
+    {
+      '@type': 'Question',
+      'name': 'Соответствует ли ваш бетон ГОСТу?',
+      'acceptedAnswer': {
+        '@type': 'Answer',
+        'text': 'Да, весь наш бетон производится по ГОСТ и сопровождается паспортом качества. Это гарантирует соответствие заявленной марке и характеристикам.',
+      },
+    },
+  ],
+})
 </script>
 
 <template>

@@ -1,30 +1,5 @@
 <script setup lang="ts">
 import { useHead } from '@unhead/vue'
-// App.vue (setup)
-import { defineLocalBusiness, defineWebSite, useSchemaOrg } from '@vueuse/schema-org'
-
-useSchemaOrg([
-  defineWebSite({
-    name: 'MG Бетон',
-    url: 'https://mg-beton.kz',
-    description: 'Производство и доставка бетона, раствора, керамзита и сопутствующих материалов по Казахстану.',
-  }),
-
-  defineLocalBusiness({
-    name: 'MG Бетон',
-    url: 'https://mg-beton.kz',
-    image: 'https://mg-beton.kz/logo.png',
-    telephone: '+77751442023',
-    email: 'megabeton@mail.ru',
-    description: 'Производство и доставка бетона по всему Казахстану. Бетон от 15 000 тг/м³. Услуги автобетононасоса, раствор, керамзит и другое.',
-    address: {
-      streetAddress: 'Улица Казыбаева, 262',
-      addressLocality: 'Алматы',
-      addressCountry: 'KZ',
-    },
-    openingHours: ['Mo-Sa 08:00-20:00'],
-  }),
-])
 
 useHead({
   meta: [
