@@ -1,6 +1,31 @@
 <script setup lang="ts">
+import { useSeoMeta } from '@unhead/vue'
+
 defineOptions({
   name: 'IndexPage',
+})
+
+useSeoMeta({
+  // Basic SEO
+  title: 'Product Name - Your Brand',
+  description: 'Detailed product description optimized for search engines.',
+
+  // Open Graph
+  ogTitle: 'Product Name - Your Brand',
+  ogDescription: 'Engaging description for social media shares.',
+  ogImage: 'https://example.com/product-social.jpg',
+  ogUrl: 'https://example.com/products/my-product',
+  ogSiteName: 'Your Brand',
+
+  // Twitter
+  twitterTitle: 'Product Name - Your Brand',
+  twitterDescription: 'Engaging description for Twitter shares.',
+  twitterImage: 'https://example.com/product-twitter.jpg',
+  twitterCard: 'summary_large_image',
+
+  // Product specific (structured data will be generated)
+  articlePublishedTime: '2023-01-01',
+  articleModifiedTime: '2023-02-15',
 })
 
 const grades = [

@@ -31,6 +31,7 @@ catalogs:
     vitest: ^3.2.2
     vue-tsc: ^2.2.10
   frontend:
+    '@unhead/vue': ^2.0.10
     '@vueuse/core': ^13.3.0
     '@vueuse/head': ^2.0.0
     '@vueuse/schema-org': ^2.2.0
