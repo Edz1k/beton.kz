@@ -49,6 +49,7 @@
     "unplugin-vue-router": "catalog:build",
     "vite": "catalog:build",
     "vite-plugin-vue-devtools": "catalog:dev",
+    "vite-ssg-sitemap": "catalog:build",
     "vitest": "catalog:dev",
     "vue-tsc": "catalog:dev"
   },

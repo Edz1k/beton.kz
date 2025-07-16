@@ -1,3 +1,36 @@
+<script setup lang="ts">
+import { useSeoMeta } from '@unhead/vue'
+import {
+  defineWebPage,
+  useSchemaOrg,
+} from '@vueuse/schema-org'
+
+defineOptions({
+  name: 'PumpServicePage',
+})
+
+// SEO мета-теги
+useSeoMeta({
+  title: 'Аренда бетонного насоса в Алматы — MG Бетон',
+  description: 'Услуги аренды автобетононасоса с разной длиной стрелы от 32 до 65 м. Стационарные и мобильные насосы. Доставка, подача, операторы.',
+  ogTitle: 'Бетонный насос — аренда в Алматы | MG Бетон',
+  ogDescription: 'Аренда автобетононасосов от 30 000 ₸ в час. Подача на высоту до 65 метров. Опытные операторы и точная работа.',
+  ogUrl: 'https://mg-beton.kz/services',
+  twitterCard: 'summary',
+  twitterTitle: 'Бетонный насос — MG Бетон',
+  twitterDescription: 'Подача бетона до 65 метров. Услуги автобетононасосов в Алматы.',
+})
+
+// Schema.org разметка
+useSchemaOrg([
+  defineWebPage({
+    name: 'Аренда бетонного насоса | MG Бетон',
+    description: 'Аренда автобетононасосов и стационарных насосов от 30 000 ₸/час. С выездом по Алматы и области.',
+    url: 'https://mg-beton.kz/services',
+  }),
+])
+</script>
+
 <template>
   <section
     id="hero"
