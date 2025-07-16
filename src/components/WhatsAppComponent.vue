@@ -7,6 +7,7 @@ function trackWhatsAppClick() {
     })
   }
 }
+const message = 'Здравствуйте! Я хочу заказать Бетон. Подскажите, пожалуйста, как оформить заказ?'
 </script>
 
 <template>
@@ -15,10 +16,11 @@ function trackWhatsAppClick() {
     <div class="p-4 rounded-full bg-green-500 shadow-lg transition-all duration-300 relative hover:shadow-xl">
       <a
         target="_blank"
-        href="https://wa.me/77751442023"
+        :href="`https://wa.me/77751442023?text=${encodeURIComponent(message)}`"
         aria-label="Открыть чат в WhatsApp"
         @click="trackWhatsAppClick"
       >
+
         <div class="i-mdi:whatsapp text-3xl text-white" />
       </a>
     </div>

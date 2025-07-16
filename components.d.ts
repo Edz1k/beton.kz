@@ -16,6 +16,7 @@ declare module 'vue' {
     Floor: typeof import('./src/components/TabsVariants/Floor.vue')['default']
     FooterComponent: typeof import('./src/components/FooterComponent.vue')['default']
     KeramzitCalc: typeof import('./src/components/TabsVariants/KeramzitCalc.vue')['default']
+    KeramzitCard: typeof import('./src/components/KeramzitCard.vue')['default']
     NavigationComponent: typeof import('./src/components/NavigationComponent.vue')['default']
     PhoneComponent: typeof import('./src/components/PhoneComponent.vue')['default']
     PhoneInput: typeof import('./src/components/Inputs/PhoneInput.vue')['default']

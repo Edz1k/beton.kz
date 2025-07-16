@@ -26,6 +26,7 @@
     "@antfu/eslint-config": "catalog:dev",
     "@iconify-json/carbon": "catalog:build",
     "@iconify-json/mdi": "catalog:build",
+    "@iconify-json/tabler": "catalog:frontend",
     "@types/node": "catalog:dev",
     "@unhead/schema-org": "catalog:frontend",
     "@unocss/eslint-plugin": "catalog:dev",

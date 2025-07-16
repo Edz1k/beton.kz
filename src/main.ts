@@ -9,7 +9,9 @@ import 'uno.css'
 
 export const createApp = ViteSSG(
   App,
-  { routes },
+  { routes, scrollBehavior() {
+    return { top: 0 }
+  } },
   (ctx) => {
     const head = createHead()
 

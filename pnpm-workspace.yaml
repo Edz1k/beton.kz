@@ -31,6 +31,7 @@ catalogs:
     vitest: ^3.2.2
     vue-tsc: ^2.2.10
   frontend:
+    '@iconify-json/tabler': ^1.2.19
     '@unhead/schema-org': ^2.0.10
     '@unhead/vue': ^2.0.10
     '@vueuse/core': ^13.3.0

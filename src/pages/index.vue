@@ -43,6 +43,24 @@ useSchemaOrg([
     openingHours: ['Mo-Sa 08:00-20:00'],
   }),
 ])
+const faqs = [
+  {
+    question: 'Какая марка бетона подходит для фундамента?',
+    answer: 'Для заливки фундамента частного дома чаще всего используют бетон М300 или бетон М350. Эти марки обеспечивают необходимую прочность, устойчивость к влаге и морозу.',
+  },
+  {
+    question: 'В чём разница между бетоном М250 и М350?',
+    answer: 'Бетон М250 — это более бюджетный вариант, используется для стяжек и полов. Бетон М350 — более прочный, применяется в строительстве колонн, плит перекрытия и монолитных конструкций.',
+  },
+  {
+    question: 'Как выбрать нужную марку бетона?',
+    answer: 'Выбор зависит от типа конструкции: для дорожек подойдёт М200–М250, для ленточного фундамента — бетон М300, для нагруженных конструкций — М350 и выше. Наши специалисты бесплатно помогут определиться.',
+  },
+  {
+    question: 'Соответствует ли ваш бетон ГОСТу?',
+    answer: 'Да, весь наш бетон производится по ГОСТ и сопровождается паспортом качества. Это гарантирует соответствие заявленной марке и характеристикам.',
+  },
+]
 
 const grades = [
   {
@@ -193,65 +211,6 @@ defineQuestion({
     <CTAComponent />
   </section>
 
-  <FAQComponent />
+  <FAQComponent :faqs="faqs" title="Часто задаваемые вопросы о марках бетона" />
   <!-- Таблица услуг -->
-  <!-- <section id="services" class="px-4 py-16 bg-gray-50 scroll-mt-16">
-    <div class="mx-auto text-center container">
-      <h2 class="text-2xl text-gray-900 font-bold mb-8 sm:text-4xl">
-        Услуги аренды бетонного насоса в Алматы
-      </h2>
-
-      <div class="border border-gray-200 rounded-lg shadow-sm overflow-x-auto">
-        <table class="text-sm text-gray-800 text-left min-w-full">
-          <thead class="text-xs text-gray-700 tracking-wide font-semibold bg-gray-100 uppercase">
-            <tr>
-              <th class="px-4 py-3">
-                Длина стрелы
-              </th>
-              <th class="px-4 py-3">
-                Площадка
-              </th>
-              <th class="px-4 py-3">
-                Мин. время
-              </th>
-              <th class="px-4 py-3">
-                Цена (1 ч)
-              </th>
-            </tr>
-          </thead>
-          <tbody class="divide-gray-200 divide-y">
-            <tr
-              v-for="(item, index) in [
-                ['Стационарный — 80 м', '3м x 8м', '3 часа', 'от 30 000 тг'],
-                ['32 метра', '8м x 10м', '3 часа', 'от 35 000 тг'],
-                ['37 метров', '10м x 10м', '3 часа', 'от 35 000 тг'],
-                ['42 метра', '12м x 12м', '3 часа', 'от 40 000 тг'],
-                ['47 метров', '12м x 12м', '5 часов', 'от 40 000 тг'],
-                ['52 метра', '14м x 14м', '5 часов', 'от 45 000 тг'],
-                ['62 метра', '15м x 15м', '5 часов', 'от 50 000 тг'],
-                ['65 метра', '15м x 15м', '5 часов', 'от 55 000 тг'],
-              ]" :key="index" :class="index % 2 === 0 ? 'bg-white' : 'bg-gray-50'"
-            >
-              <td class="font-medium px-4 py-3">
-                {{ item[0] }}
-              </td>
-              <td class="px-4 py-3">
-                {{ item[1] }}
-              </td>
-              <td class="px-4 py-3">
-                {{ item[2] }}
-              </td>
-              <td class="text-main font-semibold px-4 py-3">
-                {{ item[3] }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="mt-10 flex justify-center">
-        <RequestModal />
-      </div>
-    </div>
-  </section> -->
 </template>

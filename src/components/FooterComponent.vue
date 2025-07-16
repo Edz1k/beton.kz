@@ -15,10 +15,21 @@
           Навигация
         </h3>
         <ul class="text-sm space-y-2">
-          <li><a href="#hero" class="hover:underline">Главная</a></li>
-          <li><a href="#calc" class="hover:underline">Калькулятор объема</a></li>
-          <li><a href="#services" class="hover:underline">Услуги</a></li>
-          <li><a href="#contacts" class="hover:underline">Контакты</a></li>
+          <li class="hover:underline">
+            <RouterLink to="/">
+              Главная
+            </RouterLink>
+          </li>
+          <li class="hover:underline">
+            <RouterLink to="/keramzit">
+              Керамзит
+            </RouterLink>
+          </li>
+          <li class="hover:underline">
+            <RouterLink to="/services">
+              Бетонные насосы
+            </RouterLink>
+          </li>
         </ul>
       </div>
 
@@ -60,13 +71,13 @@
     <!-- Нижняя панель -->
     <div class="text-sm text-gray-500 mx-auto mt-10 px-4 pt-4 border-t border-gray-200 flex flex-col items-center justify-between container sm:flex-row">
       <p class="mb-2 sm:mb-0">
-        &copy; 2024 MG Бетон | Все права защищены
+        &copy; {{ new Date().getFullYear() }} MG Бетон | Все права защищены
       </p>
       <div class="text-xl text-gray-600 flex gap-4">
         <a href="https://wa.me/77751442023" target="_blank" rel="noopener" aria-label="WhatsApp">
           <div class="i-mdi:whatsapp transition duration-200 hover:text-green-500" />
         </a>
-        <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
+        <a href="https://www.instagram.com/mg_betonalmaty?utm_source=ig_web_button_share_sheet&igsh=MWo3aWt3ZmxkcnNvbQ==" target="_blank" rel="noopener" aria-label="Instagram">
           <div class="i-mdi:instagram transition duration-200 hover:text-pink-500" />
         </a>
       </div>

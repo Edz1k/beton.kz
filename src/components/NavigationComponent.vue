@@ -39,7 +39,7 @@ const isOpen = ref(false)
                 <div class="i-mdi:phone text-main mr-2" />+7 775 144 20 23
               </li>
             </a>
-            <li>megabetonkz@mail.ru</li>
+            <li><a href="mailto:megabeton@mail.ru" class="transition-all hover:underline">megabeton@mail.ru</a></li>
           </ul>
         </div>
 
