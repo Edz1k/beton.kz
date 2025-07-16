@@ -34,7 +34,7 @@ useSchemaOrg([
 <template>
   <section
     id="hero"
-    class="bg-[url('/nasos/hero.png')] flex min-h-screen items-center relative bg-cover bg-center"
+    class="bg-[url('/nasos/hero.webp')] flex min-h-screen items-center relative bg-cover bg-center"
   >
     <div class="bg-black/60 inset-0 absolute z-0" aria-hidden="true" />
 

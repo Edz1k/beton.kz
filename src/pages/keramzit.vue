@@ -37,25 +37,25 @@ const keramzitTypes = [
     name: 'Керамзит глиняный 5–20 мм (за м³)',
     description: 'Лёгкий глиняный керамзит фракции 5–20 мм. Идеален для утепления полов, стяжек, дренажа. Продаётся в мешках и биг-бегах. Возможна доставка КамАЗом.',
     price: 'от 20 000',
-    image: '/keramzit/keramzitCard.png',
+    image: '/keramzit/keramzitCard.webp',
   },
   {
     name: 'Керамзит глиняный 20–40 мм (за м³)',
     description: 'Глиняный керамзит крупной фракции 20–40 мм. Применяется для дренажа, шумоизоляции и засыпки. Доступен в мешках и биг-бегах. Доставка по городу и области.',
     price: 'от 21 000',
-    image: '/keramzit/keramzitCard.png',
+    image: '/keramzit/keramzitCard.webp',
   },
   {
     name: 'Керамзит сланцевый 5–20 мм (за м³)',
     description: 'Сланцевый керамзит 5–20 мм — более тяжёлый и прочный. Подходит для нагруженных конструкций и промышленных объектов. Продаётся в биг-бегах. Доставка возможна.',
     price: 'от 22 000',
-    image: '/keramzit/keramzitCard.png',
+    image: '/keramzit/keramzitCard.webp',
   },
   {
     name: 'Керамзит сланцевый 20–40 мм (за м³)',
     description: 'Крупнофракционный сланцевый керамзит для дренажей и звукоизоляции. Устойчив к нагрузкам и влаге. Фасовка — биг-беги. Доставка на КамАЗе.',
     price: 'от 23 000',
-    image: '/keramzit/keramzitCard.png',
+    image: '/keramzit/keramzitCard.webp',
   },
 ]
 
@@ -142,7 +142,7 @@ const faqs = [
 <template>
   <section
     id="hero"
-    class="bg-[url('/keramzit/bg.png')] flex min-h-screen items-center relative bg-cover bg-center"
+    class="bg-[url('/keramzit/bg.webp')] flex min-h-screen items-center relative bg-cover bg-center"
   >
     <div class="bg-black/60 inset-0 absolute z-0" aria-hidden="true" />
     <div class="mx-auto px-4 relative z-10 container">

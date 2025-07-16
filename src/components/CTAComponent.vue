@@ -1,7 +1,7 @@
 <template>
   <div
     class="flex min-h-[80vh] items-center justify-center relative bg-cover bg-center bg-no-repeat"
-    style="background-image: url('/ready.png');"
+    style="background-image: url('/ready.webp');"
   >
     <div class="bg-black/60 inset-0 absolute z-0" aria-hidden="true" />
 

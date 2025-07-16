@@ -163,7 +163,7 @@ defineQuestion({
   <!-- HERO Section -->
   <section
     id="hero"
-    class="bg-[url('/background.png')] flex min-h-screen items-center relative bg-cover bg-center"
+    class="bg-[url('/background.webp')] flex min-h-screen items-center relative bg-cover bg-center"
   >
     <div class="bg-black/60 inset-0 absolute z-0" aria-hidden="true" />
 
