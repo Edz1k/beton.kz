@@ -1,11 +1,27 @@
 <script setup lang="ts">
-import { useSeoMeta } from '@unhead/vue'
+import { useHead, useSeoMeta } from '@unhead/vue'
 import { defineLocalBusiness, defineProduct, defineQuestion, defineWebPage, defineWebSite, useSchemaOrg } from '@vueuse/schema-org'
 
 defineOptions({
   name: 'IndexPage',
 })
-
+useHead({
+  script: [
+    {
+      async: true,
+      src: 'https://www.googletagmanager.com/gtag/js?id=G-EK35CW4WFV',
+    },
+    {
+      innerHTML: `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-EK35CW4WFV', { page_path: window.location.pathname });
+      `,
+      type: 'text/javascript',
+    },
+  ],
+})
 useSeoMeta({
   title: 'Бетон и керамзит с доставкой — MG Бетон',
   description: 'Бетон от 15 000 ₸. Керамзит. Доставка по Алматы за 2 часа.',

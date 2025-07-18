@@ -18,21 +18,6 @@ useHead({
     { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
     { rel: 'manifest', href: '/site.webmanifest' },
   ],
-  script: [
-    {
-      async: true,
-      src: 'https://www.googletagmanager.com/gtag/js?id=G-EK35CW4WFV',
-    },
-    {
-      innerHTML: `
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){ dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-EK35CW4WFV', { page_path: window.location.pathname });
-      `,
-      type: 'text/javascript',
-    },
-  ],
 })
 </script>
 

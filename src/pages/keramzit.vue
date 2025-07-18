@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useSeoMeta } from '@unhead/vue'
+import { useHead, useSeoMeta } from '@unhead/vue'
 import {
   defineProduct,
   defineQuestion,
@@ -10,7 +10,23 @@ import {
 defineOptions({
   name: 'KeramzitPage',
 })
-
+useHead({
+  script: [
+    {
+      async: true,
+      src: 'https://www.googletagmanager.com/gtag/js?id=AW-17169847962',
+    },
+    {
+      innerHTML: `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'AW-17169847962', { page_path: window.location.pathname });
+      `,
+      type: 'text/javascript',
+    },
+  ],
+})
 // 📌 Мета-теги и canonical
 useSeoMeta({
   title: 'Керамзит с доставкой в Алматы — MG Бетон',
@@ -188,5 +204,5 @@ const faqs = [
     <CTAComponent />
   </section>
 
-  <FAQComponent :faqs="faqs" title="Часто задаваемые вопросы о керамзите" />
+  <FAQComponent id="faqs" :faqs="faqs" title="Часто задаваемые вопросы о керамзите" />
 </template>
