@@ -211,6 +211,6 @@ defineQuestion({
     <CTAComponent />
   </section>
 
-  <FAQComponent :faqs="faqs" title="Часто задаваемые вопросы о марках бетона" />
+  <FAQComponent id="faqs" :faqs="faqs" title="Часто задаваемые вопросы о марках бетона" />
   <!-- Таблица услуг -->
 </template>

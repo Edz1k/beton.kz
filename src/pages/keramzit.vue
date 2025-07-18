@@ -162,7 +162,7 @@ const faqs = [
     </div>
   </section>
 
-  <section class="scroll-mt-16">
+  <section id="calc" class="scroll-mt-16">
     <KeramzitCalc />
   </section>
 
