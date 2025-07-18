@@ -10,11 +10,11 @@ defineOptions({
   name: 'ContactsPage',
 })
 
-const phone = '+7 (777) 144-20-23'
+const phone = '+7 (775) 144-20-23'
 const email = 'megabeton@mail.ru'
 const address = 'г. Алматы, мкр. Кулагер, ул. Казыбаева, 262'
 
-const whatsappLink = `https://wa.me/77771442023?text=${encodeURIComponent('Здравствуйте! Хочу заказать бетон.')}`
+const whatsappLink = `https://wa.me/77751442023?text=${encodeURIComponent('Здравствуйте! Хочу заказать бетон.')}`
 
 // Мета-теги
 useSeoMeta({
