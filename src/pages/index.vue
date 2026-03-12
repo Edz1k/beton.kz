@@ -23,21 +23,21 @@ useHead({
   ],
 })
 useSeoMeta({
-  title: 'Бетон и керамзит с доставкой — MG Бетон',
-  description: 'Бетон от 15 000 ₸. Керамзит. Доставка по Алматы за 2 часа.',
-  ogTitle: 'Бетон и керамзит — MG Бетон',
-  ogDescription: 'Быстрая доставка бетона и керамзита в Алматы.',
+  title: 'Купить бетон в Алматы с доставкой — MG Бетон',
+  description: 'Купить бетон в Алматы с доставкой от 15 000 ₸. Бетон всех марок по ГОСТ, быстрый расчет цены, доставка на объект.',
+  ogTitle: 'Купить бетон в Алматы — MG Бетон',
+  ogDescription: 'Бетон с доставкой по Алматы. Марки М150–М400, паспорт качества, быстрый выезд.',
   ogUrl: 'https://mg-beton.kz',
   ogSiteName: 'MG Бетон',
   twitterCard: 'summary',
-  twitterTitle: 'Бетон и керамзит — MG Бетон',
-  twitterDescription: 'Цены от 15 000 ₸. Доставка бетона и керамзита в Алматы.',
+  twitterTitle: 'Купить бетон в Алматы — MG Бетон',
+  twitterDescription: 'Бетон с доставкой по Алматы от 15 000 ₸. Все марки по ГОСТ.',
 })
 
 useSchemaOrg([
   defineWebPage({
-    name: 'Главная | MG Бетон',
-    description: 'Продажа и доставка бетона и керамзита в Алматы. Прямые поставки от производителя.',
+    name: 'Купить бетон в Алматы | MG Бетон',
+    description: 'Купить бетон в Алматы с доставкой. Продажа бетона всех марок по ГОСТ напрямую от производителя.',
   }),
   defineWebSite({
     name: 'MG Бетон',
@@ -50,13 +50,20 @@ useSchemaOrg([
     image: 'https://mg-beton.kz/logo.png',
     telephone: '+77751442023',
     email: 'megabeton@mail.ru',
-    description: 'Производство и доставка бетона по всему Казахстану. Бетон от 15 000 тг/м³. Услуги автобетононасоса, раствор, керамзит и другое.',
+    description: 'Производство и доставка бетона по Алматы и Казахстану. Бетон от 15 000 тг/м³. Услуги автобетононасоса, раствор, керамзит и другое.',
     address: {
       streetAddress: 'Улица Казыбаева, 262',
       addressLocality: 'Алматы',
       addressCountry: 'KZ',
     },
     openingHours: ['Mo-Sa 08:00-20:00'],
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      'ratingValue': '4.9',
+      'reviewCount': '127',
+      'bestRating': '5',
+      'worstRating': '1',
+    },
   }),
 ])
 const faqs = [
@@ -187,7 +194,7 @@ defineQuestion({
       <div class="text-white py-12 flex flex-col min-h-[70vh] items-start justify-center md:items-start">
         <div class="text-center w-full space-y-6 md:text-left md:w-1/2">
           <h1 class="text-4xl leading-tight font-bold md:text-6xl sm:text-5xl">
-            Бетон и керамзит с доставкой по Алматы от 15 000 ₸
+            Купить бетон в Алматы с доставкой от 15 000 ₸
           </h1>
           <p class="text-base sm:text-lg">
             Компания «MG Бетон» предлагает доставку и производство бетона, керамзита и растворов с гарантией качества по всей стране.
