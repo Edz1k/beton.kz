@@ -1,10 +1,24 @@
 <script setup lang="ts">
-function trackCallClick() {
-  if (typeof window.gtag === 'function') {
-    window.gtag('event', 'click_to_call', {
-      event_category: 'engagement',
-      event_label: 'Кнопка Позвонить (floating)',
+function trackCallClick(event?: MouseEvent) {
+  if (event)
+    event.preventDefault()
+
+  const phoneUrl = 'tel:+77751442023'
+
+  if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+    window.gtag('event', 'conversion', {
+      send_to: 'AW-17169847962/bLEOCJioyZAcEJqtnPs_',
+      event_callback: () => {
+        window.location.href = phoneUrl
+      },
     })
+
+    setTimeout(() => {
+      window.location.href = phoneUrl
+    }, 500)
+  }
+  else {
+    window.location.href = phoneUrl
   }
 }
 </script>
