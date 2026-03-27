@@ -6,6 +6,13 @@ function trackCallClick(event?: MouseEvent) {
   const phoneUrl = 'tel:+77751442023'
 
   if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+    // GA4 событие
+    window.gtag('event', 'click_to_call', {
+      event_category: 'engagement',
+      event_label: 'Кнопка Позвонить (floating)',
+    })
+
+    // Google Ads конверсия
     window.gtag('event', 'conversion', {
       send_to: 'AW-17169847962/bLEOCJioyZAcEJqtnPs_',
       event_callback: () => {
