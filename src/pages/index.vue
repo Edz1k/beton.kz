@@ -14,9 +14,17 @@ useHead({
     {
       innerHTML: `
         window.dataLayer = window.dataLayer || [];
-        function gtag(){ dataLayer.push(arguments); }
+        window.gtag = function(){ dataLayer.push(arguments); };
+
         gtag('js', new Date());
-        gtag('config', 'G-EK35CW4WFV', { page_path: window.location.pathname });
+
+        // GA4
+        gtag('config', 'G-EK35CW4WFV', {
+          page_path: window.location.pathname
+        });
+
+        // Google Ads
+        gtag('config', 'AW-17169847962');
       `,
       type: 'text/javascript',
     },
