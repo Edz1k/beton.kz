@@ -4,7 +4,7 @@ import { computed } from 'vue'
 interface Props {
   grade: string
   description: string
-  price: string
+  price: number
   f: string
   image: string
   to?: string

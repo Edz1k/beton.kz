@@ -260,7 +260,7 @@ onBeforeUnmount(() => {
             <ConcreteGradeCard
               :grade="grade.grade"
               :description="grade.strengthClass"
-              :price="String(grade.price)"
+              :price="grade.price"
               :f="grade.frostResistance.replace('F', '')"
               :image="grade.image"
               :to="`/beton/${grade.slug}`"
