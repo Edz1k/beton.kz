@@ -2,16 +2,21 @@ import { SchemaOrgUnheadPlugin } from '@unhead/schema-org'
 import { createHead } from '@unhead/vue/client'
 import { ViteSSG } from 'vite-ssg'
 import { routes } from 'vue-router/auto-routes'
-import App from './App.vue'
+import { concreteGrades } from '~/data/concrete-grades'
 
+import App from './App.vue'
 import './styles/main.css'
+
 import 'uno.css'
 
 export const createApp = ViteSSG(
   App,
-  { routes, scrollBehavior() {
-    return { top: 0 }
-  } },
+  {
+    routes,
+    scrollBehavior() {
+      return { top: 0 }
+    },
+  },
   (ctx) => {
     const head = createHead()
 
@@ -22,7 +27,6 @@ export const createApp = ViteSSG(
           canonicalHost: 'https://mg-beton.kz',
         },
         () => ({
-          // Можно задать мета-данные по умолчанию
           title: 'MG Бетон',
           description: 'Продажа и доставка бетона и керамзита по Алматы',
         }),
@@ -33,3 +37,10 @@ export const createApp = ViteSSG(
     ctx.head = head
   },
 )
+
+export function includedRoutes(paths: string[]) {
+  return [
+    ...paths,
+    ...concreteGrades.map(item => `/beton/${item.slug}`),
+  ]
+}

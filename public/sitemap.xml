@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
   <!-- Главная -->
   <url>
     <loc>https://mg-beton.kz/</loc>
-    <lastmod>2025-07-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -11,15 +11,13 @@
   <!-- Керамзит -->
   <url>
     <loc>https://mg-beton.kz/keramzit</loc>
-    <lastmod>2025-07-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
-  <!-- Услуги бетонного насоса -->
+  <!-- Услуги -->
   <url>
     <loc>https://mg-beton.kz/services</loc>
-    <lastmod>2025-07-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -27,8 +25,45 @@
   <!-- Контакты -->
   <url>
     <loc>https://mg-beton.kz/contacts</loc>
-    <lastmod>2025-07-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <!-- Марки бетона -->
+  <url>
+    <loc>https://mg-beton.kz/beton/m150</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://mg-beton.kz/beton/m200</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://mg-beton.kz/beton/m250</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://mg-beton.kz/beton/m300</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://mg-beton.kz/beton/m350</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://mg-beton.kz/beton/m400</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
 </urlset>

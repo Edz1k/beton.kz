@@ -30,6 +30,11 @@
               Бетонные насосы
             </RouterLink>
           </li>
+          <li class="hover:underline">
+            <RouterLink to="/contacts">
+              Контакты
+            </RouterLink>
+          </li>
         </ul>
       </div>
 

@@ -11,6 +11,7 @@ declare module 'vue' {
     CalcTabs: typeof import('./src/components/CalcTabs.vue')['default']
     ConcreteGradeCard: typeof import('./src/components/ConcreteGradeCard.vue')['default']
     CTAComponent: typeof import('./src/components/CTAComponent.vue')['default']
+    FadeUp: typeof import('./src/components/ui/FadeUp.vue')['default']
     FAQComponent: typeof import('./src/components/FAQComponent.vue')['default']
     Feetback: typeof import('./src/components/Feetback.vue')['default']
     Floor: typeof import('./src/components/TabsVariants/Floor.vue')['default']

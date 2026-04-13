@@ -1,53 +1,79 @@
 <script setup lang="ts">
-defineProps<{
+import { computed } from 'vue'
+
+interface Props {
   grade: string
   description: string
   price: string
   f: string
   image: string
-}>()
-</script>
-
-<script lang="ts">
-function getUsage(grade: string) {
-  switch (grade) {
-    case 'M100': return 'подготовительных работ, стяжек, подушки под фундамент и дорожек'
-    case 'M150': return 'отмосток, садовых дорожек и легких фундаментов'
-    case 'M200': return 'плит перекрытия, лестничных маршей и полов'
-    case 'M250': return 'фундаментов, заливки полов, монолитных работ'
-    case 'M300': return 'монолитных перекрытий, стен и плит'
-    case 'M350': return 'нагруженных колонн, ЖБИ изделий, лестниц, армопоясов'
-    case 'M400': return 'банковских хранилищ, мостов, паркингов и эстакад'
-    default: return 'строительных и ремонтных работ общего назначения'
-  }
+  to?: string
 }
+
+const props = defineProps<Props>()
+
+const usageMap: Record<string, string> = {
+  M100: 'подготовительных работ, стяжек, подушки под фундамент и дорожек',
+  M150: 'отмосток, садовых дорожек и легких фундаментов',
+  M200: 'плит перекрытия, лестничных маршей и полов',
+  M250: 'фундаментов, заливки полов и монолитных работ',
+  M300: 'монолитных перекрытий, стен и плит',
+  M350: 'нагруженных колонн, ЖБИ изделий, лестниц и армопоясов',
+  M400: 'банковских хранилищ, мостов, паркингов и эстакад',
+}
+
+const usageText = computed(() => {
+  return usageMap[props.grade] ?? 'строительных и ремонтных работ общего назначения'
+})
+
+const cardTitle = computed(() => {
+  return `Бетон ${props.grade} купить в Алматы с доставкой по цене ${props.price} тенге за м³`
+})
+
+const cardAlt = computed(() => {
+  return `Бетон ${props.grade} Алматы — цена за м³, доставка, ГОСТ`
+})
 </script>
 
 <template>
-  <div
-    class="rounded-2xl bg-white shadow-md transition overflow-hidden hover:shadow-xl"
-    :title="`Бетон ${grade} купить в Алматы с доставкой по цене ${price} тенге за м³`"
+  <component
+    :is="to ? 'RouterLink' : 'div'"
+    :to="to"
+    class="group rounded-2xl bg-white block shadow-md transition overflow-hidden hover:shadow-xl hover:-translate-y-1"
+    :title="cardTitle"
   >
     <img
       :src="image"
-      :alt="`Бетон ${grade} Алматы — цена за м³, доставка, ГОСТ`"
-      class="h-56 w-full object-cover"
+      :alt="cardAlt"
+      class="h-56 w-full transition duration-500 object-cover group-hover:scale-[1.03]"
       loading="lazy"
     >
+
     <div class="p-5 space-y-3">
       <h3 class="text-xl text-gray-900 font-semibold">
         Бетон {{ grade }} — доставка по Алматы
       </h3>
+
       <p class="text-sm text-gray-700 leading-relaxed">
-        Прочность: {{ description }}. Морозостойкость: F{{ f }}.
-        Рекомендуется для {{ getUsage(grade) }}.
+        Прочность: {{ description }}.
+        Морозостойкость: F{{ f }}.
+        Рекомендуется для {{ usageText }}.
       </p>
-      <div class="flex items-center justify-between">
+
+      <div class="pt-1 flex gap-3 items-center justify-between">
         <span class="text-lg text-main font-bold">
           {{ price }} ₸ за м³
         </span>
-        <RequestModal />
+
+        <span
+          v-if="to"
+          class="text-sm text-gray-900 font-medium inline-flex transition items-center group-hover:translate-x-1"
+        >
+          Подробнее →
+        </span>
+
+        <RequestModal v-else />
       </div>
     </div>
-  </div>
+  </component>
 </template>
