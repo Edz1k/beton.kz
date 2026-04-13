@@ -155,7 +155,7 @@ if (gradeData.value) {
               Цена за м³
             </div>
             <div class="text-3xl font-bold mt-1">
-              от {{ gradeData.price }} ₸
+              от {{ gradeData.price.toLocaleString("ru-RU") }} ₸
             </div>
             <p class="text-sm text-black/60 leading-6 mt-2">
               Точная стоимость зависит от объема, адреса доставки и дополнительных условий на объекте.

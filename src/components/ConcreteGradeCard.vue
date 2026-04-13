@@ -62,7 +62,7 @@ const cardAlt = computed(() => {
 
       <div class="pt-1 flex gap-3 items-center justify-between">
         <span class="text-lg text-main font-bold">
-          {{ price }} ₸ за м³
+          {{ price.toLocaleString("ru-RU") }} ₸ за м³
         </span>
 
         <span
