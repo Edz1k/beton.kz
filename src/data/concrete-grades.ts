@@ -19,7 +19,7 @@ export interface ConcreteGrade {
   frostResistance: string
   waterResistance: string
   mobility: string
-  price: string
+  price: number
   image: string
   seo: ConcreteGradeSeoContent
 }
@@ -32,7 +32,7 @@ export const concreteGrades: ConcreteGrade[] = [
     frostResistance: 'F100',
     waterResistance: 'W2',
     mobility: 'П2–П4',
-    price: '15 000',
+    price: 15000,
     image: '/beton/150.webp',
     seo: {
       title: 'Купить бетон М150 в Алматы с доставкой — цена за м³ | MG Бетон',
@@ -69,7 +69,7 @@ export const concreteGrades: ConcreteGrade[] = [
     frostResistance: 'F150',
     waterResistance: 'W4',
     mobility: 'П2–П4',
-    price: '15 500',
+    price: 15500,
     image: '/beton/200.webp',
     seo: {
       title: 'Купить бетон М200 в Алматы с доставкой — цена за м³ | MG Бетон',
@@ -106,7 +106,7 @@ export const concreteGrades: ConcreteGrade[] = [
     frostResistance: 'F200',
     waterResistance: 'W4',
     mobility: 'П2–П4',
-    price: '16 000',
+    price: 16000,
     image: '/beton/250.webp',
     seo: {
       title: 'Купить бетон М250 в Алматы с доставкой — цена за м³ | MG Бетон',
@@ -143,7 +143,7 @@ export const concreteGrades: ConcreteGrade[] = [
     frostResistance: 'F200',
     waterResistance: 'W6',
     mobility: 'П2–П4',
-    price: '16 500',
+    price: 16500,
     image: '/beton/300.webp',
     seo: {
       title: 'Купить бетон М300 в Алматы с доставкой — цена за м³ | MG Бетон',
@@ -181,7 +181,7 @@ export const concreteGrades: ConcreteGrade[] = [
     frostResistance: 'F300',
     waterResistance: 'W8',
     mobility: 'П2–П4',
-    price: '17 000',
+    price: 17000,
     image: '/beton/350.webp',
     seo: {
       title: 'Купить бетон М350 в Алматы с доставкой — цена за м³ | MG Бетон',
@@ -218,7 +218,7 @@ export const concreteGrades: ConcreteGrade[] = [
     frostResistance: 'F300',
     waterResistance: 'W10',
     mobility: 'П2–П4',
-    price: '18 000',
+    price: 18000,
     image: '/beton/400.webp',
     seo: {
       title: 'Купить бетон М400 в Алматы с доставкой — цена за м³ | MG Бетон',
