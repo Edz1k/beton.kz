@@ -13,15 +13,18 @@
         Свяжитесь с нами прямо сейчас, чтобы обсудить объёмы, сроки и цены. Мы готовы предложить индивидуальный подход к каждому клиенту и гарантировать качество на всех этапах.
       </p>
 
-      <div class="flex flex-col gap-4 items-center justify-center sm:flex-row">
-        <a
-          href="tel:+77751442023"
-          class="text-white font-medium px-6 py-3 rounded-lg bg-yellow-500 inline-flex gap-2 shadow transition-all duration-300 items-center hover:bg-yellow-600"
-        >
-          Позвонить
-        </a>
-
-        <RequestModal />
+      <div class="flex flex-col gap-4 w-full items-center justify-center sm:flex-row">
+        <div class="w-1/2">
+          <a
+            href="tel:+77751442023"
+            class="text-white font-medium px-6 py-3 rounded-lg bg-yellow-500 inline-flex gap-2 w-full shadow transition-all duration-300 items-center justify-center hover:bg-yellow-600"
+          >
+            Позвонить
+          </a>
+        </div>
+        <div class="w-1/2">
+          <RequestModal />
+        </div>
       </div>
     </div>
   </div>

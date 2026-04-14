@@ -64,7 +64,7 @@ function handleSend() {
 
 <template>
   <button
-    class="text-white px-6 py-3 rounded-lg bg-main shadow-md transition-all hover:opacity-90"
+    class="text-white px-6 py-3 rounded-lg bg-main w-full shadow-md transition-all hover:opacity-90"
     @click="openModal"
   >
     Оставить заявку
