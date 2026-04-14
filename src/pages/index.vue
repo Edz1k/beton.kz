@@ -209,7 +209,7 @@ onBeforeUnmount(() => {
                 </div>
 
                 <a
-                  href="#calc"
+                  href="tel:+77751442023"
                   class="text-white font-medium px-6 py-3 border border-white/20 rounded-xl bg-white/10 inline-flex transition-all duration-300 items-center justify-center backdrop-blur-sm hover:bg-white/15 hover:-translate-y-0.5"
                 >
                   Рассчитать стоимость
