@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import type { Article } from '~/services/articles'
-import { onMounted, ref } from 'vue'
+import { useSeoMeta } from '@unhead/vue'
 import { fetchArticles, getArticlePreviewImage } from '~/services/articles'
-
-const articles = ref<Article[]>([])
-const loading = ref(true)
-const error = ref('')
 
 function formatDate(date?: string | null) {
   if (!date)
@@ -18,17 +14,22 @@ function formatDate(date?: string | null) {
   })
 }
 
-onMounted(async () => {
-  try {
-    articles.value = await fetchArticles()
-  }
-  catch (err) {
-    console.error(err)
-    error.value = 'Не удалось загрузить статьи'
-  }
-  finally {
-    loading.value = false
-  }
+let articles: Article[] = []
+let error = ''
+
+try {
+  articles = await fetchArticles()
+}
+catch (err) {
+  console.error('FETCH ARTICLES ERROR:', err)
+  error = 'Не удалось загрузить статьи'
+}
+
+useSeoMeta({
+  title: 'Гид по бетону и керамзиту | MG Бетон',
+  description: 'Полезные статьи о бетоне, керамзите, выборе марок и строительстве в Алматы',
+  ogTitle: 'Гид по бетону и керамзиту | MG Бетон',
+  ogDescription: 'Полезные статьи о бетоне, керамзите, выборе марок и строительстве',
 })
 </script>
 
@@ -50,7 +51,7 @@ onMounted(async () => {
         </h1>
 
         <p class="text-base text-slate-600 leading-7 mx-auto mt-5 max-w-2xl md:text-lg">
-          Практические статьи о выборе бетона, керамзита, применении марок,
+          Практические статьи о выборе бетона, керамзите, применении марок,
           расчётах, доставке и строительных материалах в Алматы.
         </p>
 
@@ -85,11 +86,7 @@ onMounted(async () => {
         </div>
       </div>
 
-      <p v-if="loading" class="text-slate-500 py-10 text-center">
-        Загрузка...
-      </p>
-
-      <p v-else-if="error" class="text-red-600 py-10 text-center">
+      <p v-if="error" class="text-red-600 py-10 text-center">
         {{ error }}
       </p>
 

@@ -34,7 +34,9 @@ export function getArticlePreviewImage(article: Article): string | null {
 }
 export async function fetchArticleSlugs(): Promise<string[]> {
   const articles = await fetchArticles()
-  return articles.map(article => article.slug)
+  return articles
+    .map(article => article.slug)
+    .filter((slug): slug is string => Boolean(slug))
 }
 export async function fetchArticles(): Promise<Article[]> {
   const url = new URL(`${DIRECTUS_URL}/items/articles`)

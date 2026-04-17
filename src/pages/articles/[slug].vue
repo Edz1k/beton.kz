@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Article } from '~/services/articles'
-import { computed, onMounted, ref } from 'vue'
+import { useHead, useSeoMeta } from '@unhead/vue'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import {
   fetchArticleBySlug,
@@ -10,10 +11,6 @@ import {
 
 const route = useRoute()
 const slug = computed(() => String(route.params.slug || ''))
-
-const article = ref<Article | null>(null)
-const loading = ref(true)
-const error = ref('')
 
 function formatDate(date?: string | null) {
   if (!date)
@@ -26,24 +23,54 @@ function formatDate(date?: string | null) {
   })
 }
 
-onMounted(async () => {
-  try {
-    const result = await fetchArticleBySlug(slug.value)
+let article: Article | null = null
+let error = ''
 
-    if (!result) {
-      error.value = 'Статья не найдена'
-      return
-    }
+try {
+  article = await fetchArticleBySlug(slug.value)
 
-    article.value = result
-  }
-  catch (err) {
-    console.error(err)
-    error.value = 'Не удалось загрузить статью'
-  }
-  finally {
-    loading.value = false
-  }
+  if (!article)
+    error = 'Статья не найдена'
+}
+catch (err) {
+  console.error(err)
+  error = 'Не удалось загрузить статью'
+}
+
+const pageTitle = computed(() => {
+  if (article?.title)
+    return `${article.title} | MG Бетон`
+  return 'Статья | MG Бетон'
+})
+
+const pageDescription = computed(() => {
+  return article?.description || 'Полезная статья от MG Бетон'
+})
+
+const pageImage = computed(() => {
+  return article ? getArticlePreviewImage(article) : null
+})
+
+useSeoMeta({
+  title: () => pageTitle.value,
+  description: () => pageDescription.value,
+  ogTitle: () => pageTitle.value,
+  ogDescription: () => pageDescription.value,
+  ogType: 'article',
+  ogImage: () => pageImage.value || undefined,
+  twitterCard: 'summary_large_image',
+  twitterTitle: () => pageTitle.value,
+  twitterDescription: () => pageDescription.value,
+  twitterImage: () => pageImage.value || undefined,
+})
+
+useHead({
+  link: [
+    {
+      rel: 'canonical',
+      href: `https://mg-beton.kz/articles/${slug.value}`,
+    },
+  ],
 })
 </script>
 

@@ -24,7 +24,9 @@ useHead({
 <template>
   <main font-sans>
     <NavigationComponent />
-    <RouterView />
+    <Suspense>
+      <RouterView />
+    </Suspense>
     <PhoneComponent />
     <WhatsAppComponent />
     <FooterComponent />

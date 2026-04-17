@@ -10,7 +10,7 @@ const links = [
   { label: 'Главная', href: '/' },
   { label: 'Керамзит', href: '/keramzit' },
   { label: 'Бетонный насос', href: '/services' },
-  { label: 'Гид', href: '/articles' },
+  { label: 'Новости', href: '/articles' },
   { label: 'Контакты', href: '/contacts' },
 ]
 
