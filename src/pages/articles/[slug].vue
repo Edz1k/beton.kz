@@ -1,13 +1,7 @@
 <script setup lang="ts">
 import type { Article } from '~/services/articles'
 import { useHead, useSeoMeta } from '@unhead/vue'
-import {
-  defineArticle,
-  defineBreadcrumb,
-  defineWebPage,
-  useSchemaOrg,
-} from '@vueuse/schema-org'
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import {
   fetchArticleBySlug,
@@ -15,65 +9,19 @@ import {
   getDirectusAssetUrl,
 } from '~/services/articles'
 
-defineOptions({
-  name: 'ArticlePage',
-})
-
 const route = useRoute()
+const slug = computed(() => String(route.params.slug || ''))
 
-const slug = computed(() => {
-  const params = route.params
+const article = ref<Article | null>(null)
+const loading = ref(true)
+const error = ref('')
 
-  return 'slug' in params && typeof params.slug === 'string'
-    ? params.slug
-    : ''
-})
-
-const isValidSlug = computed(() => {
-  return !!slug.value && slug.value !== ':slug' && slug.value !== 'undefined'
-})
-
-let article: Article | null = null
-let error = ''
-
-try {
-  if (isValidSlug.value) {
-    article = await fetchArticleBySlug(slug.value)
-
-    if (!article)
-      error = 'Статья не найдена'
-  }
-  else {
-    error = 'Статья не найдена'
-  }
-}
-catch (err) {
-  console.error('Failed to fetch article:', err)
-  error = 'Не удалось загрузить статью'
-}
-
-const articleUrl = computed(() =>
-  article
-    ? `https://mg-beton.kz/articles/${slug.value}`
-    : 'https://mg-beton.kz/articles',
-)
-
+const articleUrl = computed(() => `https://mg-beton.kz/articles/${slug.value}`)
 const articleImage = computed(() => {
-  if (!article)
+  if (!article.value)
     return null
-
-  return getArticlePreviewImage(article)
+  return getArticlePreviewImage(article.value)
 })
-
-const pageTitle = computed(() =>
-  article?.title
-    ? `${article.title} — MG Бетон`
-    : 'Статья — MG Бетон',
-)
-
-const pageDescription = computed(() =>
-  article?.description || 'Полезная статья от MG Бетон.',
-)
 
 function formatDate(date?: string | null) {
   if (!date)
@@ -87,71 +35,64 @@ function formatDate(date?: string | null) {
 }
 
 useSeoMeta({
-  title: () => pageTitle.value,
-  description: () => pageDescription.value,
-  ogTitle: () => pageTitle.value,
-  ogDescription: () => pageDescription.value,
-  ogUrl: () => articleUrl.value,
-  ogImage: () => articleImage.value || undefined,
+  title: computed(() =>
+    article.value?.title
+      ? `${article.value.title} — MG Бетон`
+      : 'Статья — MG Бетон',
+  ),
+  description: computed(() =>
+    article.value?.description || 'Полезная статья от MG Бетон.',
+  ),
+  ogTitle: computed(() =>
+    article.value?.title
+      ? `${article.value.title} — MG Бетон`
+      : 'Статья — MG Бетон',
+  ),
+  ogDescription: computed(() =>
+    article.value?.description || 'Полезная статья от MG Бетон.',
+  ),
+  ogUrl: computed(() => articleUrl.value),
+  ogImage: computed(() => articleImage.value || undefined),
   twitterCard: 'summary_large_image',
-  twitterTitle: () => pageTitle.value,
-  twitterDescription: () => pageDescription.value,
-  twitterImage: () => articleImage.value || undefined,
+  twitterTitle: computed(() =>
+    article.value?.title
+      ? `${article.value.title} — MG Бетон`
+      : 'Статья — MG Бетон',
+  ),
+  twitterDescription: computed(() =>
+    article.value?.description || 'Полезная статья от MG Бетон.',
+  ),
+  twitterImage: computed(() => articleImage.value || undefined),
 })
 
-useHead(() => ({
+useHead({
   link: [
     {
       rel: 'canonical',
-      href: articleUrl.value,
+      href: articleUrl,
     },
   ],
-}))
+})
 
-useSchemaOrg([
-  defineWebPage({
-    name: pageTitle.value,
-    description: pageDescription.value,
-    url: articleUrl.value,
-  }),
-])
+onMounted(async () => {
+  try {
+    const result = await fetchArticleBySlug(slug.value)
 
-if (article) {
-  defineArticle({
-    headline: article.title,
-    description: article.description || 'Полезная статья от MG Бетон.',
-    image: articleImage.value || undefined,
-    datePublished: article.created_at || undefined,
-    dateModified: article.created_at || undefined,
-    author: 'MG Бетон',
-    mainEntityOfPage: articleUrl.value,
-    publisher: {
-      '@type': 'Organization',
-      'name': 'MG Бетон',
-      'logo': {
-        '@type': 'ImageObject',
-        'url': 'https://mg-beton.kz/logo.png',
-      },
-    },
-  })
+    if (!result) {
+      error.value = 'Статья не найдена'
+      return
+    }
 
-  defineBreadcrumb({
-    itemListElement: [
-      {
-        name: 'Главная',
-        item: 'https://mg-beton.kz/',
-      },
-      {
-        name: 'Гид',
-        item: 'https://mg-beton.kz/articles',
-      },
-      {
-        name: article.title,
-        item: articleUrl.value,
-      },
-    ],
-  })
-}
+    article.value = result
+  }
+  catch (err) {
+    console.error(err)
+    error.value = 'Не удалось загрузить статью'
+  }
+  finally {
+    loading.value = false
+  }
+})
 </script>
 
 <template>
