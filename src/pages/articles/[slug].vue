@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Article } from '~/services/articles'
-import { useHead, useSeoMeta } from '@unhead/vue'
 import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import {
@@ -16,13 +15,6 @@ const article = ref<Article | null>(null)
 const loading = ref(true)
 const error = ref('')
 
-const articleUrl = computed(() => `https://mg-beton.kz/articles/${slug.value}`)
-const articleImage = computed(() => {
-  if (!article.value)
-    return null
-  return getArticlePreviewImage(article.value)
-})
-
 function formatDate(date?: string | null) {
   if (!date)
     return ''
@@ -33,46 +25,6 @@ function formatDate(date?: string | null) {
     year: 'numeric',
   })
 }
-
-useSeoMeta({
-  title: computed(() =>
-    article.value?.title
-      ? `${article.value.title} — MG Бетон`
-      : 'Статья — MG Бетон',
-  ),
-  description: computed(() =>
-    article.value?.description || 'Полезная статья от MG Бетон.',
-  ),
-  ogTitle: computed(() =>
-    article.value?.title
-      ? `${article.value.title} — MG Бетон`
-      : 'Статья — MG Бетон',
-  ),
-  ogDescription: computed(() =>
-    article.value?.description || 'Полезная статья от MG Бетон.',
-  ),
-  ogUrl: computed(() => articleUrl.value),
-  ogImage: computed(() => articleImage.value || undefined),
-  twitterCard: 'summary_large_image',
-  twitterTitle: computed(() =>
-    article.value?.title
-      ? `${article.value.title} — MG Бетон`
-      : 'Статья — MG Бетон',
-  ),
-  twitterDescription: computed(() =>
-    article.value?.description || 'Полезная статья от MG Бетон.',
-  ),
-  twitterImage: computed(() => articleImage.value || undefined),
-})
-
-useHead({
-  link: [
-    {
-      rel: 'canonical',
-      href: articleUrl,
-    },
-  ],
-})
 
 onMounted(async () => {
   try {
