@@ -50,7 +50,7 @@ export async function includedRoutes(paths: string[]) {
   }
 
   const filteredPaths = paths.filter(path =>
-    path !== '/articles/:slug' && path !== '/:grade',
+    path !== '/articles/:slug' && path !== '/beton/:grade',
   )
 
   return Array.from(
