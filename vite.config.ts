@@ -21,7 +21,7 @@ export default defineConfig({
   ssgOptions: {
     onFinished() {
       generateSitemap({
-        exclude: ['/admin', '/private', '/beton/:grade', '/beton'],
+        exclude: ['/admin', '/private', '/beton'],
         hostname: 'https://mg-beton.kz',
       })
     },
