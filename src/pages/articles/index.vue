@@ -1,7 +1,16 @@
 <script setup lang="ts">
 import type { Article } from '~/services/articles'
 import { useSeoMeta } from '@unhead/vue'
+import {
+  defineWebPage,
+  useSchemaOrg,
+} from '@vueuse/schema-org'
+import { computed } from 'vue'
 import { fetchArticles, getArticlePreviewImage } from '~/services/articles'
+
+defineOptions({
+  name: 'ArticlesPage',
+})
 
 function formatDate(date?: string | null) {
   if (!date)
@@ -25,12 +34,44 @@ catch (err) {
   error = 'Не удалось загрузить статьи'
 }
 
-useSeoMeta({
-  title: 'Гид по бетону и керамзиту | MG Бетон',
-  description: 'Полезные статьи о бетоне, керамзите, выборе марок и строительстве в Алматы',
-  ogTitle: 'Гид по бетону и керамзиту | MG Бетон',
-  ogDescription: 'Полезные статьи о бетоне, керамзите, выборе марок и строительстве',
+const canonicalUrl = computed(() => 'https://mg-beton.kz/articles')
+
+const pageTitle = computed(() => 'Гид по бетону и керамзиту | MG Бетон')
+
+const pageDescription = computed(() =>
+  'Полезные статьи о бетоне, керамзите, выборе марок, расчётах, доставке и строительстве в Алматы',
+)
+
+const pageImage = computed(() => {
+  if (!articles.length)
+    return undefined
+
+  return getArticlePreviewImage(articles[0]) || undefined
 })
+
+useSeoMeta({
+  title: () => pageTitle.value,
+  description: () => pageDescription.value,
+
+  ogTitle: () => pageTitle.value,
+  ogDescription: () => pageDescription.value,
+  ogType: 'website',
+  ogUrl: () => canonicalUrl.value,
+  ogImage: () => pageImage.value,
+
+  twitterCard: 'summary_large_image',
+  twitterTitle: () => pageTitle.value,
+  twitterDescription: () => pageDescription.value,
+  twitterImage: () => pageImage.value,
+})
+
+useSchemaOrg([
+  defineWebPage({
+    name: () => pageTitle.value,
+    description: () => pageDescription.value,
+    url: () => canonicalUrl.value,
+  }),
+])
 </script>
 
 <template>
@@ -47,12 +88,11 @@ useSeoMeta({
         </span>
 
         <h1 class="text-4xl text-slate-900 leading-tight font-bold mt-6 md:text-5xl xl:text-6xl">
-          Гид по бетону и керамзиту
+          Гид по Бетону и Керамзиту
         </h1>
 
         <p class="text-base text-slate-600 leading-7 mx-auto mt-5 max-w-2xl md:text-lg">
-          Практические статьи о выборе бетона, керамзите, применении марок,
-          расчётах, доставке и строительных материалах в Алматы.
+          Полезные статьи о бетоне, керамзите, выборе марок, расчётах, доставке и строительстве в Алматы
         </p>
 
         <div class="mt-8 flex flex-wrap gap-3 items-center justify-center">

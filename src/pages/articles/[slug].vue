@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import type { Article } from '~/services/articles'
-import { useHead, useSeoMeta } from '@unhead/vue'
+import { useSeoMeta } from '@unhead/vue'
+import {
+  defineArticle,
+  defineBreadcrumb,
+  defineWebPage,
+  useSchemaOrg,
+} from '@vueuse/schema-org'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import {
@@ -9,7 +15,11 @@ import {
   getDirectusAssetUrl,
 } from '~/services/articles'
 
-const route = useRoute()
+defineOptions({
+  name: 'ArticleSlugPage',
+})
+
+const route = useRoute('/articles/[slug]')
 const slug = computed(() => String(route.params.slug || ''))
 
 function formatDate(date?: string | null) {
@@ -37,6 +47,8 @@ catch (err) {
   error = 'Не удалось загрузить статью'
 }
 
+const canonicalUrl = computed(() => `https://mg-beton.kz/articles/${slug.value}`)
+
 const pageTitle = computed(() => {
   if (article?.title)
     return `${article.title} | MG Бетон`
@@ -54,24 +66,68 @@ const pageImage = computed(() => {
 useSeoMeta({
   title: () => pageTitle.value,
   description: () => pageDescription.value,
+
   ogTitle: () => pageTitle.value,
   ogDescription: () => pageDescription.value,
   ogType: 'article',
+  ogUrl: () => canonicalUrl.value,
   ogImage: () => pageImage.value || undefined,
+
   twitterCard: 'summary_large_image',
   twitterTitle: () => pageTitle.value,
   twitterDescription: () => pageDescription.value,
   twitterImage: () => pageImage.value || undefined,
+
+  articlePublishedTime: () => article?.created_at || undefined,
+  articleModifiedTime: () => article?.created_at || undefined,
 })
 
-useHead({
-  link: [
-    {
-      rel: 'canonical',
-      href: `https://mg-beton.kz/articles/${slug.value}`,
+useSchemaOrg([
+  defineWebPage({
+    name: () => pageTitle.value,
+    description: () => pageDescription.value,
+    url: () => canonicalUrl.value,
+
+  }),
+
+  defineArticle({
+    headline: article?.title || 'Статья MG Бетон',
+    description: pageDescription.value,
+    image: pageImage.value || undefined,
+    datePublished: article?.created_at || undefined,
+    dateModified: article?.created_at || undefined,
+    author: {
+      '@type': 'Organization',
+      'name': 'MG Бетон',
     },
-  ],
-})
+    publisher: {
+      '@type': 'Organization',
+      'name': 'MG Бетон',
+      'logo': {
+        '@type': 'ImageObject',
+        'url': 'https://mg-beton.kz/logo.png',
+      },
+    },
+    mainEntityOfPage: canonicalUrl.value,
+  }),
+
+  defineBreadcrumb({
+    itemListElement: [
+      {
+        name: 'Главная',
+        item: 'https://mg-beton.kz',
+      },
+      {
+        name: 'Гид',
+        item: 'https://mg-beton.kz/articles',
+      },
+      {
+        name: article?.title || 'Статья',
+        item: canonicalUrl.value,
+      },
+    ],
+  }),
+])
 </script>
 
 <template>

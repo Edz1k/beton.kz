@@ -10,11 +10,19 @@ import { VueRouterAutoImports } from 'unplugin-vue-router'
 import VueRouter from 'unplugin-vue-router/vite'
 import { defineConfig } from 'vite'
 import vueDevTools from 'vite-plugin-vue-devtools'
+import generateSitemap from 'vite-ssg-sitemap'
 
 export default defineConfig({
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,
+    },
+  },
+  ssgOptions: {
+    onFinished() {
+      generateSitemap({
+        exclude: ['/admin', '/private', '/beton/:grade', '/beton'],
+      })
     },
   },
   plugins: [
