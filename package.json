@@ -18,7 +18,6 @@
     "@vueuse/head": "catalog:frontend",
     "@vueuse/schema-org": "catalog:frontend",
     "inputmask": "catalog:frontend",
-    "vite-plugin-sitemap": "catalog:build",
     "vite-ssg": "catalog:frontend",
     "vue": "catalog:frontend",
     "vue-router": "catalog:frontend"
