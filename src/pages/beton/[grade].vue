@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useSeoMeta } from '@unhead/vue'
-import { defineProduct, defineQuestion, defineWebPage, useSchemaOrg } from '@vueuse/schema-org'
+import { defineBreadcrumb, defineProduct, defineQuestion, defineWebPage, useSchemaOrg } from '@vueuse/schema-org'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { concreteGrades, getConcreteGradeBySlug } from '~/data/concrete-grades'
@@ -65,6 +65,22 @@ if (gradeData.value) {
         'ratingValue': '4.9',
         'reviewCount': '127',
       },
+    }),
+    defineBreadcrumb({
+      itemListElement: [
+        {
+          name: 'Главная',
+          item: 'https://mg-beton.kz/',
+        },
+        {
+          name: 'Бетон',
+          item: 'https://mg-beton.kz/#calc',
+        },
+        {
+          name: `Бетон ${gradeData.value.grade}`,
+          item: `https://mg-beton.kz/beton/${gradeData.value.slug}`,
+        },
+      ],
     }),
   ])
 

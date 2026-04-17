@@ -3,6 +3,7 @@ import { createHead } from '@unhead/vue/client'
 import { ViteSSG } from 'vite-ssg'
 import { routes } from 'vue-router/auto-routes'
 import { concreteGrades } from '~/data/concrete-grades'
+import { fetchArticleSlugs } from '~/services/articles'
 
 import App from './App.vue'
 import './styles/main.css'
@@ -38,9 +39,22 @@ export const createApp = ViteSSG(
   },
 )
 
-export function includedRoutes(paths: string[]) {
+export async function includedRoutes(paths: string[]) {
+  let articleRoutes: string[] = []
+
+  try {
+    const slugs = await fetchArticleSlugs()
+    articleRoutes = slugs.map(slug => `/articles/${slug}`)
+  }
+  catch (error) {
+    console.error('Failed to fetch article routes for SSG:', error)
+  }
+
+  const filteredPaths = paths.filter(path => path !== '/articles/:slug')
+
   return [
-    ...paths,
+    ...filteredPaths,
     ...concreteGrades.map(item => `/beton/${item.slug}`),
+    ...articleRoutes,
   ]
 }
