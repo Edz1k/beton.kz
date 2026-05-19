@@ -1,22 +1,42 @@
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
-import TheCounter from '../src/components/TheCounter.vue'
+import KeramzitCard from '../src/components/KeramzitCard.vue'
+import { keramzitProducts } from '../src/data/keramzit-products'
 
-describe('component of TheCounter.vue', () => {
-  it('should render', () => {
-    const wrapper = mount(TheCounter, { props: { initial: 10 } })
-    expect(wrapper.text()).toContain('10')
-    expect(wrapper.html()).toMatchSnapshot()
+describe('component of KeramzitCard.vue', () => {
+  it('should render keramzit product data', () => {
+    const product = keramzitProducts[0]
+    const wrapper = mount(KeramzitCard, {
+      props: product,
+      global: {
+        stubs: {
+          RouterLink: {
+            props: ['to'],
+            template: '<a :href="to"><slot /></a>',
+          },
+        },
+      },
+    })
+
+    expect(wrapper.text()).toContain(product.name)
+    expect(wrapper.text()).toContain(product.price.toLocaleString('ru-RU'))
   })
 
-  it('should be interactive', async () => {
-    const wrapper = mount(TheCounter, { props: { initial: 0 } })
-    expect(wrapper.text()).toContain('0')
+  it('should link to product page when target exists', () => {
+    const product = keramzitProducts[1]
+    const wrapper = mount(KeramzitCard, {
+      props: product,
+      global: {
+        stubs: {
+          RouterLink: {
+            props: ['to'],
+            template: '<a :href="to"><slot /></a>',
+          },
+        },
+      },
+    })
 
-    expect(wrapper.find('.inc').exists()).toBe(true)
-
-    await wrapper.get('button').trigger('click')
-
-    expect(wrapper.text()).toContain('1')
+    expect(wrapper.attributes('href')).toBe(product.to)
+    expect(wrapper.text()).toContain('Подробнее')
   })
 })

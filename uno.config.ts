@@ -1,3 +1,5 @@
+import mdiIcons from '@iconify-json/mdi/icons.json'
+import tablerIcons from '@iconify-json/tabler/icons.json'
 import {
   defineConfig,
   presetAttributify,
@@ -26,10 +28,15 @@ export default defineConfig({
     presetWind4(),
     presetAttributify(),
     presetIcons({
+      collections: {
+        mdi: () => mdiIcons,
+        tabler: () => tablerIcons,
+      },
       scale: 1.2,
       warn: true,
     }),
     presetWebFonts({
+      provider: 'none',
       fonts: {
         sans: 'DM Sans',
         serif: 'DM Serif Display',

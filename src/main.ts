@@ -3,6 +3,7 @@ import { createHead } from '@unhead/vue/client'
 import { ViteSSG } from 'vite-ssg'
 import { routes } from 'vue-router/auto-routes'
 import { concreteGrades } from '~/data/concrete-grades'
+import { keramzitProducts } from '~/data/keramzit-products'
 import { fetchArticleSlugs } from '~/services/articles'
 
 import App from './App.vue'
@@ -50,13 +51,14 @@ export async function includedRoutes(paths: string[]) {
   }
 
   const filteredPaths = paths.filter(path =>
-    path !== '/articles/:slug' && path !== '/beton/:grade',
+    path !== '/articles/:slug' && path !== '/beton/:grade' && path !== '/keramzit/:slug',
   )
 
   return Array.from(
     new Set([
       ...filteredPaths,
       ...concreteGrades.map(item => `/beton/${item.slug}`),
+      ...keramzitProducts.map(item => `/keramzit/${item.slug}`),
       ...articleRoutes,
     ]),
   )

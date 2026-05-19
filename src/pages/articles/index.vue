@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { Article } from '~/services/articles'
-import { useSeoMeta } from '@unhead/vue'
+import { useHead, useSeoMeta } from '@unhead/vue'
 import {
+  defineBreadcrumb,
   defineWebPage,
   useSchemaOrg,
 } from '@vueuse/schema-org'
@@ -44,9 +45,15 @@ const pageDescription = computed(() =>
 
 const pageImage = computed(() => {
   if (!articles.length)
-    return undefined
+    return 'https://mg-beton.kz/logo.png'
 
-  return getArticlePreviewImage(articles[0]) || undefined
+  return getArticlePreviewImage(articles[0]) || 'https://mg-beton.kz/logo.png'
+})
+
+useHead({
+  link: [
+    { rel: 'canonical', href: canonicalUrl.value },
+  ],
 })
 
 useSeoMeta({
@@ -71,16 +78,23 @@ useSchemaOrg([
     description: () => pageDescription.value,
     url: () => canonicalUrl.value,
   }),
+  defineBreadcrumb({
+    itemListElement: [
+      {
+        name: 'Главная',
+        item: 'https://mg-beton.kz/',
+      },
+      {
+        name: 'Гид',
+        item: canonicalUrl.value,
+      },
+    ],
+  }),
 ])
 </script>
 
 <template>
-  <section class="bg-gradient-to-b relative overflow-hidden from-slate-50 to-white via-white">
-    <div class="pointer-events-none inset-0 absolute">
-      <div class="rounded-full bg-blue-100/50 h-60 w-60 absolute blur-3xl -left-20 -top-20" />
-      <div class="rounded-full bg-orange-100/50 h-72 w-72 right-0 top-20 absolute blur-3xl" />
-    </div>
-
+  <section class="bg-slate-50 relative overflow-hidden">
     <div class="mx-auto px-4 py-14 relative md:py-20 container">
       <div class="mx-auto text-center max-w-4xl">
         <span class="text-sm text-blue-700 font-medium px-4 py-2 border border-blue-100 rounded-full bg-blue-50 inline-flex items-center">

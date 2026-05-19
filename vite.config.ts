@@ -1,6 +1,7 @@
 /// <reference types="vitest" />
 
 import path from 'node:path'
+import process from 'node:process'
 import Vue from '@vitejs/plugin-vue'
 import UnoCSS from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
@@ -12,7 +13,7 @@ import { defineConfig } from 'vite'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import generateSitemap from 'vite-ssg-sitemap'
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,
@@ -27,7 +28,7 @@ export default defineConfig({
     },
   },
   plugins: [
-    vueDevTools(),
+    command === 'serve' ? vueDevTools() : undefined,
     VueMacros({
       defineOptions: false,
       defineModels: false,
@@ -42,7 +43,9 @@ export default defineConfig({
     }),
 
     // https://github.com/posva/unplugin-vue-router
-    VueRouter(),
+    VueRouter({
+      watch: command === 'serve' && !process.env.CI,
+    }),
 
     // https://github.com/antfu/unplugin-auto-import
     AutoImport({
@@ -76,4 +79,4 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
   },
-})
+}))

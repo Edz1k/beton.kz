@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Article } from '~/services/articles'
-import { useSeoMeta } from '@unhead/vue'
+import { useHead, useSeoMeta } from '@unhead/vue'
 import {
   defineArticle,
   defineBreadcrumb,
@@ -11,7 +11,12 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import {
   fetchArticleBySlug,
+  getArticleCanonicalUrl,
+  getArticleKeywords,
+  getArticleModifiedTime,
   getArticlePreviewImage,
+  getArticleSeoDescription,
+  getArticleSeoTitle,
   getDirectusAssetUrl,
 } from '~/services/articles'
 
@@ -47,25 +52,30 @@ catch (err) {
   error = 'Не удалось загрузить статью'
 }
 
-const canonicalUrl = computed(() => `https://mg-beton.kz/articles/${slug.value}`)
+const canonicalUrl = computed(() => article ? getArticleCanonicalUrl(article) : `https://mg-beton.kz/articles/${slug.value}`)
 
 const pageTitle = computed(() => {
-  if (article?.title)
-    return `${article.title} | MG Бетон`
-  return 'Статья | MG Бетон'
+  return getArticleSeoTitle(article)
 })
 
 const pageDescription = computed(() => {
-  return article?.description || 'Полезная статья от MG Бетон'
+  return getArticleSeoDescription(article)
 })
 
 const pageImage = computed(() => {
   return article ? getArticlePreviewImage(article) : null
 })
 
+useHead({
+  link: [
+    { rel: 'canonical', href: canonicalUrl.value },
+  ],
+})
+
 useSeoMeta({
   title: () => pageTitle.value,
   description: () => pageDescription.value,
+  keywords: () => getArticleKeywords(article),
 
   ogTitle: () => pageTitle.value,
   ogDescription: () => pageDescription.value,
@@ -79,7 +89,7 @@ useSeoMeta({
   twitterImage: () => pageImage.value || undefined,
 
   articlePublishedTime: () => article?.created_at || undefined,
-  articleModifiedTime: () => article?.created_at || undefined,
+  articleModifiedTime: () => getArticleModifiedTime(article),
 })
 
 useSchemaOrg([
@@ -95,7 +105,7 @@ useSchemaOrg([
     description: pageDescription.value,
     image: pageImage.value || undefined,
     datePublished: article?.created_at || undefined,
-    dateModified: article?.created_at || undefined,
+    dateModified: getArticleModifiedTime(article),
     author: {
       '@type': 'Organization',
       'name': 'MG Бетон',
@@ -150,12 +160,7 @@ useSchemaOrg([
       </div>
     </div>
 
-    <section class="bg-gradient-to-b relative overflow-hidden from-slate-50 to-white via-white">
-      <div class="pointer-events-none inset-0 absolute">
-        <div class="rounded-full bg-blue-100/40 h-56 w-56 left-0 absolute blur-3xl -top-16" />
-        <div class="rounded-full bg-orange-100/40 h-64 w-64 right-0 top-10 absolute blur-3xl" />
-      </div>
-
+    <section class="bg-slate-50 relative overflow-hidden">
       <div class="mx-auto px-4 py-10 relative md:py-14 container">
         <div class="mx-auto max-w-4xl">
           <p v-if="error" class="text-red-600 py-20 text-center">
