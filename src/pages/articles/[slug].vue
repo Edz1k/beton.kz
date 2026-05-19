@@ -4,6 +4,7 @@ import { useHead, useSeoMeta } from '@unhead/vue'
 import {
   defineArticle,
   defineBreadcrumb,
+  defineQuestion,
   defineWebPage,
   useSchemaOrg,
 } from '@vueuse/schema-org'
@@ -12,9 +13,13 @@ import { useRoute } from 'vue-router'
 import {
   fetchArticleBySlug,
   getArticleCanonicalUrl,
+  getArticleCategory,
+  getArticleCategoryUrl,
+  getArticleFaq,
   getArticleKeywords,
   getArticleModifiedTime,
   getArticlePreviewImage,
+  getArticleRelatedLinks,
   getArticleSeoDescription,
   getArticleSeoTitle,
   getDirectusAssetUrl,
@@ -65,6 +70,12 @@ const pageDescription = computed(() => {
 const pageImage = computed(() => {
   return article ? getArticlePreviewImage(article) : null
 })
+
+const articleCategory = computed(() => getArticleCategory(article?.category))
+
+const articleFaq = computed(() => getArticleFaq(article))
+
+const relatedLinks = computed(() => getArticleRelatedLinks(article))
 
 useHead({
   link: [
@@ -131,6 +142,12 @@ useSchemaOrg([
         name: 'Гид',
         item: 'https://mg-beton.kz/articles',
       },
+      ...(articleCategory.value
+        ? [{
+            name: articleCategory.value.label,
+            item: getArticleCategoryUrl(articleCategory.value.slug),
+          }]
+        : []),
       {
         name: article?.title || 'Статья',
         item: canonicalUrl.value,
@@ -138,6 +155,19 @@ useSchemaOrg([
     ],
   }),
 ])
+
+if (articleFaq.value.length) {
+  defineQuestion({
+    mainEntity: articleFaq.value.map(item => ({
+      '@type': 'Question',
+      'name': item.question,
+      'acceptedAnswer': {
+        '@type': 'Answer',
+        'text': item.answer,
+      },
+    })),
+  })
+}
 </script>
 
 <template>
@@ -152,6 +182,15 @@ useSchemaOrg([
           <RouterLink to="/articles" class="transition hover:text-blue-700">
             Гид
           </RouterLink>
+          <template v-if="articleCategory">
+            <span>/</span>
+            <RouterLink
+              :to="`/articles/category/${articleCategory.slug}`"
+              class="transition hover:text-blue-700"
+            >
+              {{ articleCategory.label }}
+            </RouterLink>
+          </template>
           <span v-if="article">/</span>
           <span v-if="article" class="text-slate-700">
             {{ article.title }}
@@ -170,7 +209,7 @@ useSchemaOrg([
           <template v-else-if="article">
             <div class="mb-5 flex flex-wrap gap-3 items-center">
               <span class="text-sm text-blue-700 font-medium px-4 py-2 border border-blue-100 rounded-full bg-blue-50 inline-flex">
-                Полезный материал
+                {{ articleCategory?.label || 'Полезный материал' }}
               </span>
 
               <span
@@ -255,6 +294,71 @@ useSchemaOrg([
               </div>
             </div>
 
+            <section
+              v-if="relatedLinks.length"
+              class="mt-14"
+            >
+              <div class="mb-6">
+                <h2 class="text-2xl text-slate-900 font-bold md:text-3xl">
+                  Полезные страницы по теме
+                </h2>
+                <p class="text-sm text-slate-600 leading-6 mt-2">
+                  Быстрые переходы к материалам, расчетам и услугам, которые дополняют эту статью.
+                </p>
+              </div>
+
+              <div class="gap-4 grid md:grid-cols-2">
+                <RouterLink
+                  v-for="link in relatedLinks"
+                  :key="link.url"
+                  :to="link.url"
+                  class="group p-5 border border-slate-200 rounded-3xl bg-white transition hover:border-blue-200 hover:shadow-sm hover:-translate-y-0.5"
+                >
+                  <div class="flex gap-4 items-start justify-between">
+                    <div>
+                      <h3 class="text-lg text-slate-900 font-bold group-hover:text-blue-700">
+                        {{ link.title }}
+                      </h3>
+                      <p
+                        v-if="link.description"
+                        class="text-sm text-slate-600 leading-6 mt-2"
+                      >
+                        {{ link.description }}
+                      </p>
+                    </div>
+
+                    <div class="text-blue-700 rounded-2xl bg-blue-50 flex shrink-0 h-11 w-11 items-center justify-center">
+                      <div class="i-mdi:arrow-top-right h-5 w-5" />
+                    </div>
+                  </div>
+                </RouterLink>
+              </div>
+            </section>
+
+            <section
+              v-if="articleFaq.length"
+              class="mt-14"
+            >
+              <h2 class="text-2xl text-slate-900 font-bold mb-6 md:text-3xl">
+                Частые вопросы по теме
+              </h2>
+
+              <div class="space-y-4">
+                <div
+                  v-for="item in articleFaq"
+                  :key="item.question"
+                  class="p-5 border border-slate-200 rounded-3xl bg-slate-50"
+                >
+                  <h3 class="text-lg text-slate-900 font-bold">
+                    {{ item.question }}
+                  </h3>
+                  <p class="text-sm text-slate-600 leading-6 mt-2">
+                    {{ item.answer }}
+                  </p>
+                </div>
+              </div>
+            </section>
+
             <div class="mt-16 p-8 border border-slate-200 rounded-[32px] bg-slate-50 md:p-10">
               <div class="max-w-2xl">
                 <span class="text-sm text-slate-700 font-medium px-4 py-2 rounded-full bg-white inline-flex ring-1 ring-slate-200">
@@ -325,6 +429,15 @@ useSchemaOrg([
               </p>
 
               <div class="mt-6 space-y-3">
+                <RouterLink
+                  v-if="articleCategory"
+                  :to="`/articles/category/${articleCategory.slug}`"
+                  class="text-sm text-slate-700 font-medium px-4 py-3 border border-slate-200 rounded-2xl flex transition items-center justify-between hover:text-blue-700 hover:border-blue-200"
+                >
+                  {{ articleCategory.label }}
+                  <span>→</span>
+                </RouterLink>
+
                 <RouterLink
                   to="/articles"
                   class="text-sm text-slate-700 font-medium px-4 py-3 border border-slate-200 rounded-2xl flex transition items-center justify-between hover:text-blue-700 hover:border-blue-200"

@@ -1,17 +1,28 @@
 <script setup lang="ts">
 import type { Article } from '~/services/articles'
 import { useHead, useSeoMeta } from '@unhead/vue'
-import {
-  defineBreadcrumb,
-  defineWebPage,
-  useSchemaOrg,
-} from '@vueuse/schema-org'
+import { defineBreadcrumb, defineWebPage, useSchemaOrg } from '@vueuse/schema-org'
 import { computed } from 'vue'
-import { articleCategories, fetchArticles, getArticleCategory, getArticlePreviewImage } from '~/services/articles'
+import { useRoute } from 'vue-router'
+import {
+  fetchArticlesByCategory,
+  getArticleCategory,
+  getArticleCategoryUrl,
+  getArticlePreviewImage,
+} from '~/services/articles'
 
 defineOptions({
-  name: 'ArticlesPage',
+  name: 'ArticleCategoryPage',
 })
+
+const route = useRoute()
+const categorySlug = computed(() => {
+  const params = route.params as Partial<Record<'category', string | string[]>>
+  const categoryParam = params.category
+
+  return Array.isArray(categoryParam) ? categoryParam[0] : String(categoryParam || '')
+})
+const category = computed(() => getArticleCategory(categorySlug.value))
 
 function formatDate(date?: string | null) {
   if (!date)
@@ -28,19 +39,26 @@ let articles: Article[] = []
 let error = ''
 
 try {
-  articles = await fetchArticles()
+  if (category.value)
+    articles = await fetchArticlesByCategory(category.value.slug)
+  else
+    error = 'Категория не найдена'
 }
 catch (err) {
-  console.error('FETCH ARTICLES ERROR:', err)
-  error = 'Не удалось загрузить статьи'
+  console.error('FETCH ARTICLE CATEGORY ERROR:', err)
+  error = 'Не удалось загрузить статьи категории'
 }
 
-const canonicalUrl = computed(() => 'https://mg-beton.kz/articles')
+const canonicalUrl = computed(() =>
+  category.value ? getArticleCategoryUrl(category.value.slug) : 'https://mg-beton.kz/articles',
+)
 
-const pageTitle = computed(() => 'Гид по бетону и керамзиту | MG Бетон')
+const pageTitle = computed(() =>
+  category.value?.title ?? 'Категория статей | MG Бетон',
+)
 
 const pageDescription = computed(() =>
-  'Полезные статьи о бетоне, керамзите, выборе марок, расчётах, доставке и строительстве в Алматы',
+  category.value?.description ?? 'Полезные статьи MG Бетон о бетоне, керамзите, доставке и строительстве в Алматы.',
 )
 
 const pageImage = computed(() => {
@@ -59,13 +77,11 @@ useHead({
 useSeoMeta({
   title: () => pageTitle.value,
   description: () => pageDescription.value,
-
   ogTitle: () => pageTitle.value,
   ogDescription: () => pageDescription.value,
   ogType: 'website',
   ogUrl: () => canonicalUrl.value,
   ogImage: () => pageImage.value,
-
   twitterCard: 'summary_large_image',
   twitterTitle: () => pageTitle.value,
   twitterDescription: () => pageDescription.value,
@@ -86,6 +102,10 @@ useSchemaOrg([
       },
       {
         name: 'Гид',
+        item: 'https://mg-beton.kz/articles',
+      },
+      {
+        name: category.value?.label || 'Категория',
         item: canonicalUrl.value,
       },
     ],
@@ -94,48 +114,40 @@ useSchemaOrg([
 </script>
 
 <template>
-  <section class="bg-slate-50 relative overflow-hidden">
-    <div class="mx-auto px-4 py-14 relative md:py-20 container">
-      <div class="mx-auto text-center max-w-4xl">
-        <span class="text-sm text-blue-700 font-medium px-4 py-2 border border-blue-100 rounded-full bg-blue-50 inline-flex items-center">
-          Полезные материалы MG Бетон
+  <section class="bg-slate-50">
+    <div class="mx-auto px-4 py-14 md:py-18 container">
+      <div class="mx-auto max-w-4xl">
+        <div class="text-sm text-slate-500 mb-6 flex flex-wrap gap-2 items-center">
+          <RouterLink to="/" class="transition hover:text-blue-700">
+            Главная
+          </RouterLink>
+          <span>/</span>
+          <RouterLink to="/articles" class="transition hover:text-blue-700">
+            Гид
+          </RouterLink>
+          <span v-if="category">/</span>
+          <span v-if="category" class="text-slate-700">
+            {{ category.label }}
+          </span>
+        </div>
+
+        <span class="text-sm text-blue-700 font-medium px-4 py-2 border border-blue-100 rounded-full bg-blue-50 inline-flex">
+          {{ category?.label || 'Категория' }}
         </span>
 
-        <h1 class="text-4xl text-slate-900 leading-tight font-bold mt-6 md:text-5xl xl:text-6xl">
-          Гид по Бетону и Керамзиту
+        <h1 class="text-4xl text-slate-900 leading-tight font-bold mt-6 md:text-5xl">
+          {{ category?.title || 'Категория статей' }}
         </h1>
 
-        <p class="text-base text-slate-600 leading-7 mx-auto mt-5 max-w-2xl md:text-lg">
-          Полезные статьи о бетоне, керамзите, выборе марок, расчётах, доставке и строительстве в Алматы
+        <p class="text-base text-slate-600 leading-7 mt-5 max-w-3xl md:text-lg">
+          {{ category?.description || 'Полезные материалы MG Бетон.' }}
         </p>
-
-        <div class="mt-8 flex flex-wrap gap-3 items-center justify-center">
-          <RouterLink
-            v-for="category in articleCategories"
-            :key="category.slug"
-            :to="`/articles/category/${category.slug}`"
-            class="text-sm text-slate-700 px-4 py-2 border border-slate-200 rounded-full bg-white shadow-sm transition hover:text-blue-700 hover:border-blue-200"
-          >
-            {{ category.label }}
-          </RouterLink>
-        </div>
       </div>
     </div>
   </section>
 
   <section class="bg-white">
-    <div class="mx-auto px-4 pb-16 md:pb-20 container">
-      <div class="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-        <div>
-          <h2 class="text-2xl text-slate-900 font-bold md:text-3xl">
-            Последние статьи
-          </h2>
-          <p class="text-slate-600 mt-2">
-            Подборка полезных материалов для клиентов и строителей.
-          </p>
-        </div>
-      </div>
-
+    <div class="mx-auto px-4 py-12 md:py-16 container">
       <p v-if="error" class="text-red-600 py-10 text-center">
         {{ error }}
       </p>
@@ -145,7 +157,7 @@ useSchemaOrg([
           v-for="article in articles"
           :key="article.id"
           :to="`/articles/${article.slug}`"
-          class="group border border-slate-200 rounded-[28px] bg-white shadow-sm transition duration-300 overflow-hidden hover:shadow-2xl hover:-translate-y-1"
+          class="group border border-slate-200 rounded-[28px] bg-white shadow-sm transition duration-300 overflow-hidden hover:shadow-xl hover:-translate-y-1"
         >
           <div class="relative overflow-hidden">
             <img
@@ -162,12 +174,6 @@ useSchemaOrg([
             >
               MG Бетон
             </div>
-
-            <div class="left-4 top-4 absolute">
-              <span class="text-xs text-slate-700 font-medium px-3 py-1 rounded-full bg-white/90 backdrop-blur">
-                {{ getArticleCategory(article.category)?.label || 'Гид' }}
-              </span>
-            </div>
           </div>
 
           <div class="p-6">
@@ -178,9 +184,9 @@ useSchemaOrg([
               {{ formatDate(article.created_at) }}
             </div>
 
-            <h3 class="text-xl text-slate-900 leading-snug font-bold transition line-clamp-2 group-hover:text-blue-700">
+            <h2 class="text-xl text-slate-900 leading-snug font-bold transition line-clamp-2 group-hover:text-blue-700">
               {{ article.title }}
-            </h3>
+            </h2>
 
             <p
               v-if="article.description"
@@ -206,10 +212,10 @@ useSchemaOrg([
         class="px-6 py-14 text-center border border-slate-300 rounded-3xl border-dashed bg-slate-50"
       >
         <h2 class="text-2xl text-slate-900 font-bold">
-          Раздел скоро наполнится
+          В этой категории пока нет статей
         </h2>
         <p class="text-slate-600 mt-3">
-          Мы готовим полезные статьи о бетоне, керамзите и выборе строительных материалов.
+          Материалы появятся после публикации в Directus.
         </p>
       </div>
     </div>

@@ -4,10 +4,29 @@ export interface ArticleImageItem {
   directus_files_id: string
 }
 
+export interface ArticleFaqItem {
+  question: string
+  answer: string
+}
+
+export interface ArticleRelatedLink {
+  title: string
+  url: string
+  description?: string | null
+}
+
+export interface ArticleCategory {
+  slug: string
+  label: string
+  title: string
+  description: string
+}
+
 export interface Article {
   id: number
   title: string
   slug: string
+  category?: string | null
   description?: string | null
   content?: string | null
   published?: boolean
@@ -16,6 +35,8 @@ export interface Article {
   seo_title?: string | null
   seo_description?: string | null
   keywords?: string[] | string | null
+  faq?: ArticleFaqItem[] | null
+  related_links?: ArticleRelatedLink[] | null
   images?: ArticleImageItem[]
 }
 
@@ -25,6 +46,39 @@ interface DirectusResponse<T> {
 
 const DIRECTUS_URL = import.meta.env.VITE_DIRECTUS_URL
 const SITE_URL = 'https://mg-beton.kz'
+
+export const articleCategories: ArticleCategory[] = [
+  {
+    slug: 'beton',
+    label: 'Бетон',
+    title: 'Статьи о бетоне в Алматы | MG Бетон',
+    description: 'Полезные материалы о выборе бетона, марках, цене за куб, доставке и применении бетонных смесей в Алматы.',
+  },
+  {
+    slug: 'keramzit',
+    label: 'Керамзит',
+    title: 'Статьи о керамзите в Алматы | MG Бетон',
+    description: 'Гид по керамзиту: фракции, применение, утепление, стяжки, дренаж и доставка по Алматы.',
+  },
+  {
+    slug: 'fundament',
+    label: 'Фундамент',
+    title: 'Статьи о бетоне для фундамента | MG Бетон',
+    description: 'Как выбрать бетон для фундамента, какую марку заказать, как рассчитать объем и организовать доставку на объект.',
+  },
+  {
+    slug: 'dostavka',
+    label: 'Доставка',
+    title: 'Статьи о доставке бетона и керамзита | MG Бетон',
+    description: 'Материалы о доставке бетона, керамзита, расчете логистики, подъезде техники и подаче материалов на объект.',
+  },
+  {
+    slug: 'betonnyj-nasos',
+    label: 'Бетонный насос',
+    title: 'Статьи о бетонном насосе | MG Бетон',
+    description: 'Когда нужен бетонный насос, как организовать подачу бетона и что учитывать перед заливкой.',
+  },
+]
 
 function createDirectusUrl(path: string) {
   if (!DIRECTUS_URL)
@@ -97,12 +151,42 @@ export function getArticleModifiedTime(article?: Article | null): string | undef
   return article?.date_updated || article?.created_at || undefined
 }
 
+export function getArticleCategory(slug?: string | null): ArticleCategory | null {
+  if (!slug)
+    return null
+
+  return articleCategories.find(category => category.slug === slug) ?? null
+}
+
+export function getArticleCategoryUrl(categorySlug: string): string {
+  return `${SITE_URL}/articles/category/${categorySlug}`
+}
+
+export function getArticleFaq(article?: Article | null): ArticleFaqItem[] {
+  return article?.faq?.filter(item => item.question && item.answer) ?? []
+}
+
+export function getArticleRelatedLinks(article?: Article | null): ArticleRelatedLink[] {
+  return article?.related_links?.filter(item => item.title && item.url) ?? []
+}
+
 export async function fetchArticleSlugs(): Promise<string[]> {
   const articles = await fetchArticles()
   return articles
     .map(article => article.slug)
     .filter((slug): slug is string => Boolean(slug))
 }
+
+export async function fetchArticleCategorySlugs(): Promise<string[]> {
+  const articles = await fetchArticles()
+  const slugs = articles
+    .map(article => article.category)
+    .filter((slug): slug is string => Boolean(slug))
+    .filter(slug => Boolean(getArticleCategory(slug)))
+
+  return Array.from(new Set(slugs))
+}
+
 export async function fetchArticles(): Promise<Article[]> {
   const url = createDirectusUrl('/items/articles')
 
@@ -117,6 +201,26 @@ export async function fetchArticles(): Promise<Article[]> {
 
   if (!response.ok)
     throw new Error(`Failed to fetch articles: ${response.status}`)
+
+  const json = await response.json() as DirectusResponse<Article[]>
+  return json.data
+}
+
+export async function fetchArticlesByCategory(category: string): Promise<Article[]> {
+  const url = createDirectusUrl('/items/articles')
+
+  url.searchParams.set('filter[published][_eq]', 'true')
+  url.searchParams.set('filter[category][_eq]', category)
+  url.searchParams.set('sort', '-created_at')
+  url.searchParams.set(
+    'fields',
+    '*,images.id,images.articles_id,images.directus_files_id',
+  )
+
+  const response = await fetch(url.toString())
+
+  if (!response.ok)
+    throw new Error(`Failed to fetch articles by category: ${response.status}`)
 
   const json = await response.json() as DirectusResponse<Article[]>
   return json.data
