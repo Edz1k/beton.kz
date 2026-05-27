@@ -11,6 +11,7 @@ const links = [
   { label: 'Керамзит', href: '/keramzit' },
   { label: 'Бетонный насос', href: '/services' },
   { label: 'Контакты', href: '/contacts' },
+  { label: 'Гид', href: '/articles' },
 ]
 
 const isOpen = ref(false)

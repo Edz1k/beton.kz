@@ -3,33 +3,32 @@ import { useSeoMeta } from '@unhead/vue'
 import { defineBreadcrumb, defineProduct, defineQuestion, defineWebPage, useSchemaOrg } from '@vueuse/schema-org'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { concreteGrades, getConcreteGradeBySlug } from '~/data/concrete-grades'
+import { getKeramzitProductBySlug, keramzitProducts } from '~/data/keramzit-products'
 
 defineOptions({
-  name: 'ConcreteGradePage',
+  name: 'KeramzitProductPage',
 })
 
-const route = useRoute('/beton/[grade]')
+const route = useRoute('/keramzit/[slug]')
 
-const gradeData = computed(() => {
-  const params = route.params
+const product = computed(() => getKeramzitProductBySlug(route.params.slug))
 
-  if (!('grade' in params))
-    return null
-
-  return getConcreteGradeBySlug(params.grade)
-})
-
-const otherGrades = computed(() =>
-  concreteGrades.filter(item => item.slug !== gradeData.value?.slug),
+const otherProducts = computed(() =>
+  keramzitProducts.filter(item => item.slug !== product.value?.slug),
 )
 
 const pageTitle = computed(() =>
-  gradeData.value?.seo.title ?? 'Марка бетона не найдена | MG Бетон',
+  product.value?.seo.title ?? 'Керамзит не найден | MG Бетон',
 )
 
 const pageDescription = computed(() =>
-  gradeData.value?.seo.description ?? 'Запрашиваемая страница марки бетона не найдена.',
+  product.value?.seo.description ?? 'Запрашиваемая страница керамзита не найдена.',
+)
+
+const canonicalUrl = computed(() =>
+  product.value
+    ? `https://mg-beton.kz/keramzit/${product.value.slug}`
+    : 'https://mg-beton.kz/keramzit',
 )
 
 useSeoMeta({
@@ -37,33 +36,34 @@ useSeoMeta({
   description: () => pageDescription.value,
   ogTitle: () => pageTitle.value,
   ogDescription: () => pageDescription.value,
-  twitterCard: 'summary',
+  ogUrl: () => canonicalUrl.value,
+  ogImage: () => product.value ? `https://mg-beton.kz${product.value.image}` : undefined,
+  twitterCard: 'summary_large_image',
   twitterTitle: () => pageTitle.value,
   twitterDescription: () => pageDescription.value,
-  ogUrl: () => gradeData.value
-    ? `https://mg-beton.kz/beton/${gradeData.value.slug}`
-    : 'https://mg-beton.kz/beton',
+  twitterImage: () => product.value ? `https://mg-beton.kz${product.value.image}` : undefined,
 })
 
-if (gradeData.value) {
+if (product.value) {
   useSchemaOrg([
     defineWebPage({
-      name: `Бетон ${gradeData.value.grade} в Алматы | MG Бетон`,
-      description: gradeData.value.seo.description,
+      name: product.value.seo.title,
+      description: product.value.seo.description,
+      url: canonicalUrl.value,
     }),
     defineProduct({
-      name: `Бетон ${gradeData.value.grade}`,
-      description: gradeData.value.seo.shortDescription,
-      image: `https://mg-beton.kz${gradeData.value.image}`,
+      name: product.value.name,
+      description: product.value.seo.shortDescription,
+      image: `https://mg-beton.kz${product.value.image}`,
       offers: {
-        price: gradeData.value.price,
+        price: product.value.price,
         priceCurrency: 'KZT',
         availability: 'https://schema.org/InStock',
       },
       aggregateRating: {
         '@type': 'AggregateRating',
         'ratingValue': '4.9',
-        'reviewCount': '127',
+        'reviewCount': '96',
       },
     }),
     defineBreadcrumb({
@@ -73,19 +73,19 @@ if (gradeData.value) {
           item: 'https://mg-beton.kz/',
         },
         {
-          name: 'Бетон',
-          item: 'https://mg-beton.kz/#calc',
+          name: 'Керамзит',
+          item: 'https://mg-beton.kz/keramzit',
         },
         {
-          name: `Бетон ${gradeData.value.grade}`,
-          item: `https://mg-beton.kz/beton/${gradeData.value.slug}`,
+          name: product.value.name,
+          item: canonicalUrl.value,
         },
       ],
     }),
   ])
 
   defineQuestion({
-    mainEntity: gradeData.value.seo.faq.map(item => ({
+    mainEntity: product.value.seo.faq.map(item => ({
       '@type': 'Question',
       'name': item.question,
       'acceptedAnswer': {
@@ -98,25 +98,25 @@ if (gradeData.value) {
 </script>
 
 <template>
-  <section v-if="gradeData" class="py-12 bg-white md:py-16">
+  <section v-if="product" class="py-12 bg-white md:py-16">
     <div class="mx-auto px-4 container">
       <nav class="text-sm text-black/50 mb-6">
         <RouterLink to="/" class="transition hover:text-black">
           Главная
         </RouterLink>
         <span class="mx-2">/</span>
-        <a href="/#calc" class="transition hover:text-black">
-          Бетон
-        </a>
+        <RouterLink to="/keramzit" class="transition hover:text-black">
+          Керамзит
+        </RouterLink>
         <span class="mx-2">/</span>
-        <span class="text-black">{{ gradeData.grade }}</span>
+        <span class="text-black">{{ product.name }}</span>
       </nav>
 
       <div class="gap-10 grid items-start lg:grid-cols-2">
         <div>
           <img
-            :src="gradeData.image"
-            :alt="`Бетон ${gradeData.grade} в Алматы`"
+            :src="product.image"
+            :alt="`${product.name} в Алматы с доставкой`"
             class="rounded-3xl w-full shadow-sm object-cover"
             loading="eager"
           >
@@ -129,67 +129,67 @@ if (gradeData.value) {
           </div>
 
           <h1 class="text-3xl leading-tight font-bold mb-4 md:text-5xl">
-            Бетон {{ gradeData.grade }} в Алматы с доставкой
+            {{ product.name }} в Алматы с доставкой
           </h1>
 
           <p class="text-base text-black/70 leading-7 mb-6 md:text-lg">
-            {{ gradeData.seo.shortDescription }}
+            {{ product.seo.shortDescription }}
           </p>
 
           <div class="mb-6 gap-4 grid sm:grid-cols-2">
             <div class="p-4 border border-black/10 rounded-2xl transition hover:shadow-sm hover:-translate-y-0.5">
               <div class="mb-3 flex gap-3 items-center">
                 <div class="text-orange-600 rounded-2xl bg-orange-50 flex h-11 w-11 items-center justify-center">
-                  <div class="i-mdi:weight-lifter h-6 w-6" />
+                  <div class="i-mdi:grain h-6 w-6" />
                 </div>
                 <div class="text-sm text-black/50">
-                  Класс прочности
+                  Тип материала
                 </div>
               </div>
               <div class="text-lg font-semibold">
-                {{ gradeData.strengthClass }}
+                {{ product.typeLabel }}
               </div>
             </div>
 
             <div class="p-4 border border-black/10 rounded-2xl transition hover:shadow-sm hover:-translate-y-0.5">
               <div class="mb-3 flex gap-3 items-center">
                 <div class="text-blue-600 rounded-2xl bg-blue-50 flex h-11 w-11 items-center justify-center">
-                  <div class="i-mdi:snowflake h-6 w-6" />
+                  <div class="i-mdi:resize h-6 w-6" />
                 </div>
                 <div class="text-sm text-black/50">
-                  Морозостойкость
+                  Фракция
                 </div>
               </div>
               <div class="text-lg font-semibold">
-                {{ gradeData.frostResistance }}
+                {{ product.fraction }}
               </div>
             </div>
 
             <div class="p-4 border border-black/10 rounded-2xl transition hover:shadow-sm hover:-translate-y-0.5">
               <div class="mb-3 flex gap-3 items-center">
                 <div class="text-cyan-700 rounded-2xl bg-cyan-50 flex h-11 w-11 items-center justify-center">
-                  <div class="i-mdi:water-outline h-6 w-6" />
+                  <div class="i-mdi:weight h-6 w-6" />
                 </div>
                 <div class="text-sm text-black/50">
-                  Водонепроницаемость
+                  Плотность
                 </div>
               </div>
               <div class="text-lg font-semibold">
-                {{ gradeData.waterResistance }}
+                {{ product.density }}
               </div>
             </div>
 
             <div class="p-4 border border-black/10 rounded-2xl transition hover:shadow-sm hover:-translate-y-0.5">
               <div class="mb-3 flex gap-3 items-center">
                 <div class="text-green-600 rounded-2xl bg-green-50 flex h-11 w-11 items-center justify-center">
-                  <div class="i-mdi:chart-bell-curve-cumulative h-6 w-6" />
+                  <div class="i-mdi:package-variant-closed h-6 w-6" />
                 </div>
                 <div class="text-sm text-black/50">
-                  Подвижность
+                  Поставка
                 </div>
               </div>
               <div class="text-lg font-semibold">
-                {{ gradeData.mobility }}
+                {{ product.packageOptions }}
               </div>
             </div>
           </div>
@@ -201,10 +201,10 @@ if (gradeData.value) {
                   Цена за м³
                 </div>
                 <div class="text-3xl font-bold mt-1">
-                  от {{ gradeData.price.toLocaleString('ru-RU') }} ₸
+                  от {{ product.price.toLocaleString('ru-RU') }} ₸
                 </div>
                 <p class="text-sm text-black/60 leading-6 mt-2">
-                  Точная стоимость зависит от объема, адреса доставки, времени подачи, марки бетона и дополнительных условий на объекте.
+                  Точная стоимость зависит от объема, адреса доставки, формата поставки и условий разгрузки на объекте.
                 </p>
               </div>
 
@@ -220,16 +220,16 @@ if (gradeData.value) {
                 <div class="i-mdi:check-circle-outline h-5 w-5" />
               </div>
               <div class="text-sm font-medium">
-                Оперативный расчет стоимости
+                Подбор фракции под задачу
               </div>
             </div>
 
             <div class="p-4 border border-black/10 rounded-2xl flex gap-3 items-center">
               <div class="text-blue-600 rounded-xl bg-blue-50 flex h-10 w-10 items-center justify-center">
-                <div class="i-mdi:clock-outline h-5 w-5" />
+                <div class="i-mdi:calculator-variant-outline h-5 w-5" />
               </div>
               <div class="text-sm font-medium">
-                Быстрая подача на объект
+                Расчет объема и цены
               </div>
             </div>
 
@@ -247,7 +247,7 @@ if (gradeData.value) {
                 <div class="i-mdi:shield-check-outline h-5 w-5" />
               </div>
               <div class="text-sm font-medium">
-                Подбор марки под задачу
+                Материал под вашу работу
               </div>
             </div>
           </div>
@@ -258,18 +258,27 @@ if (gradeData.value) {
     </div>
   </section>
 
-  <CalcTabs />
+  <FadeUp
+    v-if="product"
+    id="calc"
+    tag="section"
+    class="scroll-mt-16"
+    :distance="28"
+    :duration="700"
+  >
+    <KeramzitCalc />
+  </FadeUp>
 
-  <section v-if="gradeData" class="py-12 md:py-16">
+  <section v-if="product" class="py-12 md:py-16">
     <div class="mx-auto px-4 container">
       <div class="max-w-5xl">
         <h2 class="text-2xl font-bold mb-4 md:text-3xl">
-          Бетон {{ gradeData.grade }} — описание и особенности
+          {{ product.name }} - описание и особенности
         </h2>
 
         <div class="text-base text-black/70 leading-8 space-y-4">
           <p
-            v-for="(paragraph, index) in gradeData.seo.fullDescription"
+            v-for="(paragraph, index) in product.seo.fullDescription"
             :key="`full-description-${index}`"
           >
             {{ paragraph }}
@@ -279,25 +288,25 @@ if (gradeData.value) {
     </div>
   </section>
 
-  <section v-if="gradeData" class="py-12 md:py-16">
+  <section v-if="product" class="py-12 md:py-16">
     <div class="mx-auto px-4 container">
       <div class="max-w-4xl">
         <h2 class="text-2xl font-bold mb-4 md:text-3xl">
-          Где применяется бетон {{ gradeData.grade }}
+          Где применяется {{ product.name }}
         </h2>
 
         <p class="text-base text-black/70 leading-7 mb-6">
-          Бетон {{ gradeData.grade }} используется в строительстве благодаря своим прочностным характеристикам и сфере применения. Ниже перечислены основные виды работ, где эта марка особенно востребована.
+          {{ product.name }} используют в строительстве и ремонте благодаря сочетанию небольшого веса, удобной фракции и практичных эксплуатационных свойств.
         </p>
 
         <ul class="gap-3 grid md:grid-cols-2">
           <li
-            v-for="useCase in gradeData.seo.useCases"
+            v-for="useCase in product.seo.useCases"
             :key="useCase"
             class="p-4 border border-black/10 rounded-2xl flex gap-3 transition items-start hover:border-black/20 hover:shadow-sm"
           >
             <div class="text-orange-600 mt-0.5 rounded-xl bg-orange-50 flex shrink-0 h-10 w-10 items-center justify-center">
-              <div class="i-mdi:hard-hat h-5 w-5" />
+              <div class="i-mdi:shovel h-5 w-5" />
             </div>
             <span class="leading-6">{{ useCase }}</span>
           </li>
@@ -306,16 +315,16 @@ if (gradeData.value) {
     </div>
   </section>
 
-  <section v-if="gradeData" class="py-12 bg-gray-50 md:py-16">
+  <section v-if="product" class="py-12 bg-gray-50 md:py-16">
     <div class="mx-auto px-4 container">
       <div class="max-w-5xl">
         <h2 class="text-2xl font-bold mb-4 md:text-3xl">
-          Преимущества бетона {{ gradeData.grade }}
+          Преимущества {{ product.name }}
         </h2>
 
         <div class="gap-4 grid md:grid-cols-2">
           <div
-            v-for="advantage in gradeData.seo.advantages"
+            v-for="advantage in product.seo.advantages"
             :key="advantage"
             class="p-5 rounded-2xl bg-white shadow-sm transition hover:-translate-y-0.5"
           >
@@ -333,7 +342,7 @@ if (gradeData.value) {
     </div>
   </section>
 
-  <section v-if="gradeData" class="py-12 md:py-16">
+  <section v-if="product" class="py-12 md:py-16">
     <div class="mx-auto px-4 container">
       <div class="gap-6 grid lg:grid-cols-2">
         <div class="p-6 border border-black/10 rounded-3xl md:p-8">
@@ -341,11 +350,11 @@ if (gradeData.value) {
             <div class="i-mdi:truck-fast-outline h-7 w-7" />
           </div>
           <h2 class="text-2xl font-bold mb-3">
-            Доставка бетона {{ gradeData.grade }} по Алматы
+            Доставка {{ product.name }} по Алматы
           </h2>
           <div class="text-base text-black/70 leading-7 space-y-4">
             <p
-              v-for="(paragraph, index) in gradeData.seo.deliveryText"
+              v-for="(paragraph, index) in product.seo.deliveryText"
               :key="`delivery-text-${index}`"
             >
               {{ paragraph }}
@@ -358,11 +367,11 @@ if (gradeData.value) {
             <div class="i-mdi:office-building-marker-outline h-7 w-7" />
           </div>
           <h2 class="text-2xl font-bold mb-3">
-            Почему выбирают {{ gradeData.grade }} от MG Бетон
+            Почему выбирают керамзит от MG Бетон
           </h2>
           <div class="text-base text-black/70 leading-7 space-y-4">
             <p
-              v-for="(paragraph, index) in gradeData.seo.whyChooseText"
+              v-for="(paragraph, index) in product.seo.whyChooseText"
               :key="`why-choose-text-${index}`"
             >
               {{ paragraph }}
@@ -374,13 +383,13 @@ if (gradeData.value) {
   </section>
 
   <FAQComponent
-    v-if="gradeData"
-    id="grade-faq"
-    :faqs="gradeData.seo.faq"
-    :title="`Часто задаваемые вопросы о бетоне ${gradeData.grade}`"
+    v-if="product"
+    id="keramzit-product-faq"
+    :faqs="product.seo.faq"
+    :title="`Часто задаваемые вопросы: ${product.name}`"
   />
 
-  <section v-if="gradeData" class="py-12 md:py-16">
+  <section v-if="product" class="py-12 md:py-16">
     <div class="mx-auto px-4 container">
       <div class="text-white px-6 py-8 rounded-3xl bg-black md:px-10 md:py-10">
         <div class="gap-8 grid lg:grid-cols-[1fr_auto] lg:items-center">
@@ -391,12 +400,12 @@ if (gradeData.value) {
             </div>
 
             <h2 class="text-2xl font-bold md:text-3xl">
-              Заказать бетон {{ gradeData.grade }} с доставкой
+              Заказать {{ product.name }} с доставкой
             </h2>
 
             <p class="text-white/80 mt-3 max-w-2xl">
-              Оставьте заявку, и мы быстро рассчитаем стоимость с доставкой по Алматы, подскажем по объему,
-              объясним отличия марок и поможем подобрать подходящий бетон под ваш объект.
+              Оставьте заявку, и мы рассчитаем стоимость с доставкой по Алматы, подскажем по объему,
+              фракции и формату поставки под ваш объект.
             </p>
           </div>
 
@@ -414,26 +423,26 @@ if (gradeData.value) {
     </div>
   </section>
 
-  <section v-if="gradeData" class="pb-16">
+  <section v-if="product" class="pb-16">
     <div class="mx-auto px-4 container">
       <h2 class="text-2xl font-bold mb-6 md:text-3xl">
-        Другие марки бетона
+        Другие виды керамзита
       </h2>
 
       <div class="gap-6 grid md:grid-cols-2 xl:grid-cols-3">
         <RouterLink
-          v-for="item in otherGrades"
+          v-for="item in otherProducts"
           :key="item.slug"
-          :to="`/beton/${item.slug}`"
+          :to="item.to"
           class="group p-5 border border-black/10 rounded-2xl transition hover:border-black/30 hover:shadow-md hover:-translate-y-1"
         >
           <div class="flex gap-3 items-start justify-between">
             <div>
               <div class="text-xl font-semibold">
-                Бетон {{ item.grade }}
+                {{ item.name }}
               </div>
               <div class="text-sm text-black/60 mt-2">
-                {{ item.strengthClass }} · {{ item.frostResistance }} · от {{ item.price }} ₸
+                {{ item.typeLabel }} · {{ item.fraction }} · от {{ item.price.toLocaleString('ru-RU') }} ₸
               </div>
             </div>
 
@@ -450,10 +459,10 @@ if (gradeData.value) {
 
       <div class="mt-8">
         <RouterLink
-          to="/"
+          to="/keramzit"
           class="text-sm font-medium px-5 py-3 border border-black/10 rounded-xl inline-flex transition items-center hover:border-black/30 hover:bg-gray-50"
         >
-          Вернуться на главную страницу
+          Вернуться к керамзиту
         </RouterLink>
       </div>
     </div>
@@ -462,17 +471,17 @@ if (gradeData.value) {
   <section v-else class="py-20">
     <div class="mx-auto px-4 text-center max-w-3xl">
       <h1 class="text-3xl font-bold">
-        Марка бетона не найдена
+        Керамзит не найден
       </h1>
       <p class="text-black/60 mt-4">
         Возможно, ссылка устарела или такой страницы пока нет.
       </p>
       <div class="mt-6">
         <RouterLink
-          to="/"
+          to="/keramzit"
           class="text-sm font-medium px-5 py-3 border border-black/10 rounded-xl inline-flex transition items-center hover:border-black/30 hover:bg-gray-50"
         >
-          На главную
+          К разделу керамзита
         </RouterLink>
       </div>
     </div>
