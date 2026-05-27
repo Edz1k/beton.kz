@@ -268,7 +268,7 @@ if (articleFaq.value.length) {
         <div class="mx-auto gap-10 grid max-w-6xl lg:grid-cols-[1fr_320px]">
           <div class="min-w-0">
             <div
-              class="prose prose-slate prose-headings:font-bold prose-headings:text-slate-900 prose-p:break-words prose-p:leading-8 prose-p:text-slate-700 prose-a:break-words prose-a:text-blue-700 prose-a:no-underline prose-strong:text-slate-900 prose-li:break-words prose-li:text-slate-700 prose-blockquote:border-blue-200 prose-blockquote:text-slate-700 prose-img:h-auto prose-img:max-w-full prose-img:rounded-2xl prose-pre:overflow-x-auto prose-code:break-words prose-table:block prose-table:max-w-full prose-table:overflow-x-auto prose-td:break-words prose-th:break-words hover:prose-a:text-blue-800 max-w-none break-words [&_*]:max-w-full"
+              class="article-content prose prose-slate prose-headings:font-bold prose-headings:text-slate-900 prose-p:break-words prose-p:leading-8 prose-p:text-slate-700 prose-a:break-words prose-a:text-blue-700 prose-a:no-underline prose-strong:text-slate-900 prose-li:break-words prose-li:text-slate-700 prose-blockquote:border-blue-200 prose-blockquote:text-slate-700 prose-img:h-auto prose-img:max-w-full prose-img:rounded-2xl prose-pre:overflow-x-auto prose-code:break-words prose-table:block prose-table:max-w-full prose-table:overflow-x-auto prose-td:break-words prose-th:break-words hover:prose-a:text-blue-800 max-w-none break-words [&_*]:max-w-full"
               v-html="article.content || ''"
             />
 
@@ -502,3 +502,110 @@ if (articleFaq.value.length) {
     </section>
   </article>
 </template>
+
+<style scoped>
+.article-content :deep(h2) {
+  margin: 2.25rem 0 1rem;
+  color: #0f172a;
+  font-size: 1.75rem;
+  line-height: 1.2;
+  font-weight: 800;
+}
+
+.article-content :deep(h3) {
+  margin: 1.75rem 0 0.75rem;
+  color: #0f172a;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+.article-content :deep(p) {
+  margin: 1rem 0;
+  color: #334155;
+  font-size: 1rem;
+  line-height: 1.85;
+}
+
+.article-content :deep(a) {
+  color: #1d4ed8;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.article-content :deep(a:hover) {
+  color: #1e40af;
+}
+
+.article-content :deep(ul),
+.article-content :deep(ol) {
+  margin: 1rem 0 1.25rem 1.25rem;
+  color: #334155;
+  line-height: 1.8;
+}
+
+.article-content :deep(ul) {
+  list-style: disc;
+}
+
+.article-content :deep(ol) {
+  list-style: decimal;
+}
+
+.article-content :deep(li) {
+  margin: 0.4rem 0;
+  padding-left: 0.25rem;
+}
+
+.article-content :deep(table) {
+  display: table;
+  width: 100%;
+  margin: 1.5rem 0 2rem;
+  border-collapse: collapse;
+  overflow: hidden;
+  border: 1px solid #dbe3ef;
+  border-radius: 16px;
+  background: #fff;
+  font-size: 0.95rem;
+}
+
+.article-content :deep(th),
+.article-content :deep(td) {
+  padding: 1rem;
+  border: 1px solid #dbe3ef;
+  vertical-align: top;
+  color: #334155;
+  line-height: 1.55;
+  text-align: left;
+}
+
+.article-content :deep(th) {
+  background: #f8fafc;
+  color: #0f172a;
+  font-weight: 800;
+}
+
+.article-content :deep(blockquote) {
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  border-left: 4px solid #2563eb;
+  border-radius: 0 16px 16px 0;
+  background: #eff6ff;
+  color: #334155;
+}
+
+@media (max-width: 640px) {
+  .article-content :deep(table) {
+    display: block;
+    overflow-x: auto;
+    border-radius: 12px;
+  }
+
+  .article-content :deep(th),
+  .article-content :deep(td) {
+    min-width: 180px;
+    padding: 0.85rem;
+  }
+}
+</style>
